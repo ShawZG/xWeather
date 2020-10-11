@@ -1,0 +1,325 @@
+/*************************************************************/
+QWidget#titleWidget
+{
+    border: 0px none palette(base);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: palette(base);
+}
+
+/*************************************************************/
+QPushButton#titleMenuButton
+{
+    border: none;
+    background-color: none;
+    width: 18px;
+    height: 18px;
+    padding: 15px;
+    image: url(:/app_icon/app_icon/icon_window_setting.png);
+}
+QPushButton#titleMenuButton:hover
+{
+    background-color:palette(highlight);
+}
+QPushButton#titleMenuButton::menu-indicator
+{
+    image: none;
+}
+
+/*************************************************************/
+QPushButton#titleMiniButton
+{
+    border: none;
+    background-color: none;
+    width: 18px;
+    height: 18px;
+    padding: 15px;
+    image: url(:/app_icon/app_icon/icon_window_minimize.png);
+}
+QPushButton#titleMiniButton:hover
+{
+    background-color:palette(highlight);
+}
+
+/*************************************************************/
+QPushButton#titleRestoreButton
+{
+    border: none;
+    background-color: none;
+    width: 18px;
+    height: 18px;
+    padding: 15px;
+    image: url(:/app_icon/app_icon/icon_window_restore.png);
+}
+QPushButton#titleRestoreButton:hover
+{
+    background-color:palette(highlight);
+}
+
+/*************************************************************/
+QPushButton#titleMaxButton
+{
+    border: none;
+    background-color: none;
+    width: 18px;
+    height: 18px;
+    padding: 15px;
+    image: url(:/app_icon/app_icon/icon_window_maximize.png);
+}
+QPushButton#titleMaxButton:hover
+{
+    background-color:palette(highlight);
+}
+
+/*************************************************************/
+QPushButton#titleCloseButton
+{
+    border: none;
+    background-color: none;
+    width: 18px;
+    height: 18px;
+    padding: 15px;
+    border-top-right-radius: 10px;
+    image: url(:/app_icon/app_icon/icon_window_close.png);
+}
+QPushButton#titleCloseButton:hover
+{
+    background-color:palette(highlight);
+}
+
+/*************************************************************/
+ConfigDialog QListWidget
+{
+    background-color:palette(base);
+    border-bottom-left-radius: 10px;
+    border: none;
+    text-align: center;
+}
+ConfigDialog QListWidget::item
+{
+    border: none;
+    border-radius: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 10px;
+}
+ConfigDialog QListWidget::item:hover
+{
+    background-color: palette(alternate-base);
+}
+ConfigDialog QListWidget::item:selected
+{
+    background-color: palette(alternate-base);
+}
+
+/*************************************************************/
+ConfigDialog QWidget#centerWidget
+{
+    border: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/*************************************************************/
+ConfigDialog QTextEdit#apiPublicIdEdit
+{    
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: palette(alternate-base);
+}
+/*************************************************************/
+ConfigDialog QTextEdit#apiPublicIdEdit:focus
+{
+    border: 2px solid palette(highlight);
+}
+
+/*************************************************************/
+ConfigDialog QTextEdit#apiKeyEdit
+{
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: palette(alternate-base);
+}
+/*************************************************************/
+ConfigDialog QTextEdit#apiKeyEdit:focus
+{
+    border: 2px solid palette(highlight);
+}
+
+/*************************************************************/
+ConfigDialog QPushButton#visitWebButton
+{
+    border: none;
+    border-radius: 6px;
+    background-color: palette(alternate-base);
+}
+ConfigDialog QPushButton#visitWebButton:hover
+{
+    background-color:palette(highlight);
+}
+
+/*************************************************************/
+QScrollBar:vertical
+{
+    border: 0px;
+    background: rgb(53, 53, 53);
+    width: 12px;
+    margin:10px 0px 10px 0px;
+    border-radius: 6px;
+}
+/* 滑块设置 */
+QScrollBar::handle:vertical
+{
+    background: rgb(67, 67, 67);
+    border-radius: 6px;
+}
+/* 底部控制块 */
+QScrollBar::add-line:vertical
+{
+    border: none;
+    background: none;
+    height: 0px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+/* 顶部控制块 */
+QScrollBar::sub-line:vertical
+{
+    border: none;
+    background: none;
+    height: 0px;
+    subcontrol-position:top;
+    subcontrol-origin:margin;
+}
+/* 控制块上的小箭头 */
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical
+{
+    border: none;
+    width: 0px;
+    height: 0px;
+    background: none;
+}
+/* 滑块上边区域 */
+QScrollBar::add-page:vertical
+{
+    background: pattle(base);
+}
+/* 滑块下边区域 */
+QScrollBar::sub-page:vertical
+{
+    background: pattle(base);
+}
+
+/*************************************************************/
+WeatherWidget LifeIndexListView
+{
+    background-color: rgb(53, 53, 53);
+}
+
+/*************************************************************/
+WeatherWidget FutureCityWeatherListView
+{
+    background-color: rgb(53, 53, 53);
+}
+
+/************************************************************/
+CityManagerDialog QPushButton[CityLabel="true"]
+{
+    border: none;
+    border-radius: 6px;
+    background-color:palette(alternate-base);
+}
+CityManagerDialog QPushButton[CityLabel="true"]:hover
+{
+    background-color:palette(highlight);
+}
+
+/************************************************************/
+CityManagerDialog QPushButton#editCityButton
+{
+    border: none;
+    border-radius: 6px;
+}
+CityManagerDialog QPushButton#editCityButton:hover
+{
+    background-color:palette(highlight);
+}
+CityManagerDialog QPushButton#editCityButton:checked
+{
+    background-color:palette(highlight);
+}
+
+/************************************************************/
+FavCityWidget
+{
+    border: none;
+    border-radius: 6px;
+    background-color:palette(alternate-base);
+}
+
+/************************************************************/
+FavCityWidget QPushButton
+{
+    border: none;
+    border-radius: 6px;
+    background-color:palette(alternate-base);
+}
+
+/************************************************************/
+FavCityWidget QPushButton#favCityButton:hover
+{
+    background-color:palette(highlight);
+}
+
+/************************************************************/
+FavCityWidget QPushButton#delCityButton
+{
+    border: none;
+    border-radius: 3px;
+    border-image: url(:/weather_icon/weather_icon/del_city.svg);
+}
+FavCityWidget QPushButton#delCityButton:hover
+{
+    background-color: palette(highlight);
+}
+
+/*************************************************************/
+QPushButton#pageUpButton {
+    border: none;
+    border-radius: 6px;
+    background-color: none;
+}
+QPushButton#pageUpButton:hover
+{
+    icon-size: 64px;
+    background-color: rgb(255, 255, 255, 60);
+    image: url(:/app_icon/app_icon/page_up.svg);
+}
+QPushButton#pageUpButton:pressed
+{
+    icon-size: 64px;
+    background-color: rgb(255, 255, 255, 40);
+    image: url(:/app_icon/app_icon/page_up.svg);
+}
+
+/*************************************************************/
+QPushButton#pageDownButton
+{
+    border: none;
+    border-radius: 6px;
+    background-color: none;
+}
+QPushButton#pageDownButton:hover
+{
+    icon-size: 64px;
+    background-color: rgb(255, 255, 255, 60);
+    image: url(:/app_icon/app_icon/page_down.svg);
+}
+QPushButton#pageDownButton:pressed
+{
+    icon-size: 64px;
+    background-color: rgb(255, 255, 255, 40);
+    image: url(:/app_icon/app_icon/page_down.svg);
+}
