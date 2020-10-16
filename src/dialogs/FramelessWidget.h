@@ -26,6 +26,8 @@ private:
     void updateGeometry(int offsetX, int offsetY);
     void updateMousePressPaddingRect();
 
+    void x11mouseMoveEvent(int globalX, int globalY);
+
     int padding = 10;                       //边距
     bool moveEnable = true;                 //可移动
     bool resizeEnable = true;               //可拉伸
@@ -52,6 +54,7 @@ private:
     QRect rectRightTop;             //右上侧区域
     QRect rectLeftBottom;           //左下侧区域
     QRect rectRightBottom;          //右下侧区域
+
 };
 
 #endif // FRAMELESSWIDGET_H

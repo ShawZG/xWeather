@@ -1,6 +1,12 @@
 #include <QEvent>
 #include <QDebug>
 #include <QHoverEvent>
+#include <QCursor>
+
+#ifdef Q_OS_LINUX
+#include <X11/Xlib.h>
+#include <QX11Info>
+#endif
 
 #include "FramelessWidget.h"
 
@@ -145,6 +151,13 @@ bool FramelessWidget::eventFilter(QObject *watched, QEvent *event)
             int offsetY = point.y() - lastPos.y();
             //根据按下处的位置判断是否是移动控件还是拉伸控件
             if (true == moveEnable && true == pressed) {
+#ifdef Q_OS_LINUX
+                // 部分X11平台窗管不支持无边框窗口移出屏幕外
+                if (true == QX11Info::isPlatformX11()) {
+                    QPoint gPoint = widget->mapToGlobal(hoverEvent->pos());
+                    x11mouseMoveEvent(gPoint.x(), gPoint.y());
+                }
+#endif
                 widget->move(widget->x() + offsetX, widget->y() + offsetY);
             }
             if (true == resizeEnable) {
@@ -202,4 +215,33 @@ void FramelessWidget::setFramelessWidget(QWidget *widget)
         //设置悬停为真,必须设置这个,不然当父窗体里边还有子窗体全部遮挡了识别不到MouseMove,需要识别HoverMove
         this->widget->setAttribute(Qt::WA_Hover, true);
     }
+}
+
+void FramelessWidget::x11mouseMoveEvent(int globalX, int globalY)
+{
+#ifdef Q_OS_LINUX
+    XEvent event;
+    memset(&event, 0, sizeof(XEvent));
+
+    Display *display = QX11Info::display();
+    event.xclient.type = ClientMessage;
+    event.xclient.message_type = XInternAtom(display, "_NET_WM_MOVERESIZE", False);
+    event.xclient.display = display;
+    //wid 是当前程序的 window id，可以通过QWidget->wId()获得，QWidget必须实例化
+    event.xclient.window = static_cast<XID>(widget->winId());
+    event.xclient.format = 32;
+    event.xclient.data.l[0] = globalX;
+    event.xclient.data.l[1] = globalY;
+    event.xclient.data.l[2] = 8;
+    event.xclient.data.l[3] = Button1;
+    event.xclient.data.l[4] = 1;
+
+    XUngrabPointer(display, CurrentTime);
+    XSendEvent( display,
+                QX11Info::appRootWindow(QX11Info::appScreen()),
+                False,
+                SubstructureNotifyMask | SubstructureRedirectMask,
+                &event);
+    XFlush(display);
+#endif
 }
