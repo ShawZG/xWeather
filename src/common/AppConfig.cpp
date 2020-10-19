@@ -61,7 +61,7 @@ void AppConfig::loadConfig()
     QSettings::sync() Writes any unsaved changes to permanent storage, and reloads any settings
     that have been changed in the meantime by another application.
     */
-    AppConfig::setting = new QSettings(QSettings::NativeFormat, QSettings::UserScope, "xweather", "xweather");
+    AppConfig::setting = new QSettings();
 }
 
 QVariant AppConfig::getConfig(QString key, QVariant defaultValue)
