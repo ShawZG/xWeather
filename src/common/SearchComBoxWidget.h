@@ -15,6 +15,7 @@ public:
 private slots:
     void slotSearchCity(QString name);
     void slotParseSearchCity();
+    void slotAddCity(int index);
 
 private:
     void initUI();

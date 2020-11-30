@@ -24,7 +24,6 @@ void SearchComBoxWidget::initUI()
 
     QVBoxLayout *vLayout = new QVBoxLayout();
     vLayout->addWidget(comboBox);
-
     setLayout(vLayout);
 }
 
@@ -32,16 +31,14 @@ void SearchComBoxWidget::initTimer()
 {
     timer = new QTimer();
     timer->setSingleShot(true);
-    timer->setInterval(500);
+    timer->setInterval(800);
 }
 
 void SearchComBoxWidget::initConnect()
 {
     connect(timer, &QTimer::timeout, [=](){slotSearchCity(comboBox->currentText());});
     connect(comboBox, &QComboBox::currentTextChanged, [=](){timer->start();});
-    connect(comboBox, QOverload<int>::of(&QComboBox::activated),
-            [=](int index){ QVariantMap map = comboBox->itemData(index).toMap();
-                            emit SignalManager::instance()->sigAddCity(map["name"].toString(), map["id"].toString());});
+    connect(comboBox, QOverload<int>::of(&QComboBox::activated), this, &SearchComBoxWidget::slotAddCity);
 }
 
 void SearchComBoxWidget::slotSearchCity(QString name)
@@ -90,4 +87,12 @@ void SearchComBoxWidget::slotParseSearchCity()
     comboBox->showPopup();
     /* 下拉框显示后，lineedit的内容会被自动填充为下拉框的内容。 */
     comboBox->lineEdit()->setText(currentText);
+}
+
+void SearchComBoxWidget::slotAddCity(int index)
+{
+    QVariantMap map = comboBox->itemData(index).toMap();
+    if ( false == map["name"].toString().isEmpty() && false == map["id"].toString().isEmpty()) {
+        emit SignalManager::instance()->sigAddCity(map["name"].toString(), map["id"].toString());
+    }
 }
