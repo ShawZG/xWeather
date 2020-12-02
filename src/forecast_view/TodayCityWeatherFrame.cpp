@@ -1,6 +1,7 @@
 #include <QDateTime>
 #include <QMouseEvent>
 
+#include "AqiToolTip.h"
 #include "CommonHelper.h"
 #include "SignalManager.h"
 #include "TodayCityWeatherFrame.h"
@@ -8,6 +9,15 @@
 TodayCityWeatherFrame::TodayCityWeatherFrame(QWidget *parent) : QFrame(parent)
 {
     setMouseTracking(true);
+    aqiToolTip = new AqiToolTip(this);
+    aqiToolTip->hide();
+
+    initConnect();
+}
+
+void TodayCityWeatherFrame::initConnect()
+{
+    connect(this, &TodayCityWeatherFrame::sigAqiToolTipVisible, this, &TodayCityWeatherFrame::slotAqiToolTipVisible);
 }
 
 void TodayCityWeatherFrame::setTodayCiytWeatherData(CityTodayWeather data)
@@ -42,14 +52,18 @@ void TodayCityWeatherFrame::mouseReleaseEvent(QMouseEvent *event)
 
 void TodayCityWeatherFrame::mouseMoveEvent(QMouseEvent *event)
 {
-   if (isRefreshButtonHover != refreshButtonRect.contains(event->pos())){
-       update();
-       isRefreshButtonHover = !isRefreshButtonHover;
-   }
-   if (isLocationButtonHover != locationButtonRect.contains(event->pos())){
-       update();
-       isLocationButtonHover = !isLocationButtonHover;
-   }
+    if (isRefreshButtonHover != refreshButtonRect.contains(event->pos())){
+        isRefreshButtonHover = !isRefreshButtonHover;
+        update();
+    }
+    if (isLocationButtonHover != locationButtonRect.contains(event->pos())){
+        isLocationButtonHover = !isLocationButtonHover;
+        update();
+    }
+    if (isAqiToolTipLabelHover != aqiToolTipLabelRect.contains(event->pos())){
+        isAqiToolTipLabelHover = !isAqiToolTipLabelHover;
+        emit sigAqiToolTipVisible(isAqiToolTipLabelHover);
+    }
 }
 
 void TodayCityWeatherFrame::paintEvent(QPaintEvent *event)
@@ -166,6 +180,7 @@ void TodayCityWeatherFrame::paintMinorWeather()
     QRect aqiStrRect = CommonHelper::textPaintRect(painter.font(), aqiStrPoint, aqiStr);
     /* 绘制空气质量背景 */
     QRect aqiBackgroundRect = QRect(aqiIconRect.topLeft() - QPoint(6, 6), aqiStrRect.bottomRight() + QPoint(6, 6));
+    aqiToolTipLabelRect = aqiBackgroundRect;
     QColor color = CommonHelper::getAirQualityIndexColor(cityTodayWeather.aqi.toInt());
     painter.setBrush(color);
     painter.setPen(QColor(Qt::transparent));
@@ -175,3 +190,27 @@ void TodayCityWeatherFrame::paintMinorWeather()
     painter.drawImage(aqiIconRect, QImage(":/weather_icon/weather_icon/aqi.svg"));
     painter.drawText(aqiStrRect, aqiStr);
 }
+
+void TodayCityWeatherFrame::slotAqiToolTipVisible(bool isVisible)
+{
+    if (true == isVisible) {
+        CityAqi aqiData;
+        aqiData.primary = cityTodayWeather.primary;
+        aqiData.pm10 = cityTodayWeather.pm10;
+        aqiData.pm2p5 = cityTodayWeather.pm2p5;
+        aqiData.no2 = cityTodayWeather.no2;
+        aqiData.so2 = cityTodayWeather.so2;
+        aqiData.co = cityTodayWeather.co;
+
+        aqiToolTip->setAqiData(aqiData);
+
+        int x = aqiToolTipLabelRect.topLeft().x() + aqiToolTipLabelRect.width() / 2 - aqiToolTip->width() / 2;
+        int y = aqiToolTipLabelRect.y() - aqiToolTip->height() - 5;
+        aqiToolTip->move(x, y);
+        aqiToolTip->show();
+    }
+    else {
+        aqiToolTip->hide();
+    }
+}
+

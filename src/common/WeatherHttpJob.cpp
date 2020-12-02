@@ -188,6 +188,14 @@ void WeatherHttpJob::slotParseTodayAir()
     QJsonObject nowOjb = obj.value("now").toObject();
     cityTodayWeather.aqi = nowOjb.value("aqi").toString();
     cityTodayWeather.aqiLevel = nowOjb.value("category").toString();
+    cityTodayWeather.primary = nowOjb.value("primary").toString();
+    cityTodayWeather.primary = nowOjb.value("primary").toString();
+    cityTodayWeather.pm10 = nowOjb.value("pm10").toString();
+    cityTodayWeather.pm2p5 = nowOjb.value("pm2p5").toString();
+    cityTodayWeather.no2 = nowOjb.value("no2").toString();
+    cityTodayWeather.so2 = nowOjb.value("so2").toString();
+    cityTodayWeather.co = nowOjb.value("co").toString();
+    cityTodayWeather.o3 = nowOjb.value("o3").toString();
 
     WeatherWidget *weatherWidget = qobject_cast<WeatherWidget *>(parent());
     weatherWidget->updateTodayCityWeather(cityTodayWeather);

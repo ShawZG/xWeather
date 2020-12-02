@@ -21,7 +21,13 @@ typedef struct tagCityTodayWeather {
     QString windScale;      //风力
     QString aqi;            //空气质量
     QString aqiLevel;       //空气质量等级
-    QString aqiTips;        //空气质量描述
+    QString primary;        //主要污染物
+    QString pm10;           //PM10
+    QString pm2p5;          //PM2.5
+    QString no2;            //二氧化氮
+    QString so2;            //二氧化硫
+    QString co;             //一氧化碳
+    QString o3;             //臭氧
     QString alarmType;      //预警种类
     QString alarmLevel;     //预警等级
     QString alarmContent;   //预警内容
@@ -57,5 +63,18 @@ typedef struct tagTopCity {
     QString DistrictName;
     QString cityId;
 } TopCity;
+
+/* 空气质量 */
+typedef struct tagCityAqi {
+    QString aqi;            //空气质量
+    QString aqiLevel;       //空气质量等级
+    QString primary;        //主要污染物
+    QString pm10;           //PM10
+    QString pm2p5;          //PM2.5
+    QString no2;            //二氧化氮
+    QString so2;            //二氧化硫
+    QString co;             //一氧化碳
+} CityAqi;
+
 
 #endif // GLOBAL_H

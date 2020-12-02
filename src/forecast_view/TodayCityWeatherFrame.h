@@ -4,6 +4,8 @@
 #include "Global.h"
 #include <QFrame>
 
+class AqiToolTip;
+
 class TodayCityWeatherFrame : public QFrame
 {
     Q_OBJECT
@@ -20,8 +22,14 @@ protected:
 signals:
     void sigUpdateWeather();
     void sigAddCity();
+    void sigAqiToolTipVisible(bool isVisible);
+
+private slots:
+    void slotAqiToolTipVisible(bool isVisible);
 
 private:
+    void initConnect();
+
     void paintLocationDate();
     void paintUpdateTime();
     void paintMajorWeather();
@@ -39,6 +47,11 @@ private:
     bool                isLocationButtonHover = false;
     bool                isLocationButtonPressed = false;
     bool                isLocationButtonReleased = false;
+
+    QRect               aqiToolTipLabelRect;
+    bool                isAqiToolTipLabelHover = false;
+    AqiToolTip          *aqiToolTip = nullptr;
+
 };
 
 #endif // TODAYCITYWEATHERFRAME_H
