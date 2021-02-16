@@ -30,3 +30,7 @@ Assume that you are at the build dir.
 2. cpack
 ```
 Then, you will find a deb packet at build dir.
+
+#### 4. Release Deb packet
+You can download the .deb packet in release page and install it, if your distribution linux is deepin(v20) or uos(v20).
+The .deb packet is built by Qt5.11.3 in release page, so you may not be enable to install the .deb in other distribution linux.
