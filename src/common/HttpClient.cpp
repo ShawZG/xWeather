@@ -166,3 +166,11 @@ QNetworkReply *HttpClient::getSearchCityRequest(QString cityName, int cityNum, Q
     QString url = getUrlWithData(params, "https://geoapi.heweather.net/v2/city/lookup");
     return manager->get(QNetworkRequest(url));
 }
+
+QNetworkReply *HttpClient::getWarningCityWeatherRequest(QString cityId)
+{
+    QMap<QString, QString> params;
+    params["location"] = cityId;
+    QString url = getUrlWithData(params, "https://devapi.qweather.com/v7/warning/now");
+    return manager->get(QNetworkRequest(url));
+}

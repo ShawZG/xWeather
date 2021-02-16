@@ -18,6 +18,7 @@ public:
     void updateTodayCityWeather(CityTodayWeather data);
     void updateTodayLifyIndex(QList<CityLifeIndex> list);
     void updateFutureCityWeather(QList<CityFutureWeather> list);
+    void updateWarningCityWeather(QList<CityWarningWeather> list);
 
     void setCityInfo(const QString &cityId, const QString &cityName);
     inline QString getCityId() {return cityId;}

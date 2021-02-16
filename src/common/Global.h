@@ -45,6 +45,17 @@ typedef struct tagCityFutureWeather {
 } CityFutureWeather;
 Q_DECLARE_METATYPE(CityFutureWeather)
 
+/* 极端天气 */
+typedef struct tagCityWarningWeather {
+    QString id;             //极端天气id
+    QString pubTime;        //发布时间
+    QString status;         //预警状态
+    QString level;          //预警等级
+    QString typeName;       //预警类型
+    QString text;           //预计详细内容
+} CityWarningWeather;
+Q_DECLARE_METATYPE(CityWarningWeather)
+
 /* 城市当天生活指数 健身 洗车 穿衣 紫外线 粉尘 舒适度 感冒 晾晒*/
 enum LifeIndex {fitness = 1, car_washing = 2, clothe = 3, uv = 5, dust = 7, comfort = 8, sick = 9,  hanger = 14};
 /* 城市当天生活指数信息 */
@@ -75,6 +86,5 @@ typedef struct tagCityAqi {
     QString so2;            //二氧化硫
     QString co;             //一氧化碳
 } CityAqi;
-
 
 #endif // GLOBAL_H

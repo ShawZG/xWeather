@@ -79,6 +79,7 @@
         <file>weather_icon/location.svg</file>
         <file>weather_icon/del_city.svg</file>
         <file>weather_icon/edit_city.svg</file>
+        <file>weather_icon/warning.svg</file>
     </qresource>
     <qresource prefix="/app_icon">
         <file>app_icon/icon_window_close.png</file>

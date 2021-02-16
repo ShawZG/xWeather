@@ -34,6 +34,7 @@ void WeatherHttpJob::updateWeather()
     getTodayCityAir();
     getTodayCityLife();
     getFutureCityLife();
+    getWarningCityWeather();
 }
 
 void WeatherHttpJob::startJob(bool isSingleShot, int interval)
@@ -295,6 +296,12 @@ void WeatherHttpJob::getFutureCityLife()
     connect(reply, &QNetworkReply::finished, this, &WeatherHttpJob::slotParseFutureWeather);
 }
 
+void WeatherHttpJob::getWarningCityWeather()
+{
+    QNetworkReply *reply = HttpClient::instance()->getWarningCityWeatherRequest(cityId);
+    connect(reply, &QNetworkReply::finished, this, &WeatherHttpJob::slotParseWarningWeather);
+}
+
 void WeatherHttpJob::slotParseFutureWeather()
 {
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(QObject::sender());
@@ -318,7 +325,7 @@ void WeatherHttpJob::slotParseFutureWeather()
     WeatherWidget *weatherWidget = qobject_cast<WeatherWidget *>(parent());
     weatherWidget->updateTodayCityWeather(cityTodayWeather);
 
-    QList<CityFutureWeather> futrueList;
+    QList<CityFutureWeather> futureList;
     /* 今天的天气不作为未来天气的预报, 只预报5天 */
     int days = (dailyArray.size() <= 5) ? dailyArray.size() : 5;
 
@@ -334,7 +341,47 @@ void WeatherHttpJob::slotParseFutureWeather()
         futureWeather.temperatureHigh = json.value("tempMax").toString();
         futureWeather.temperatureLow = json.value("tempMin").toString();
         futureWeather.windSpeed = json.value("windScaleDay").toString();
-        futrueList << futureWeather;
+        futureList << futureWeather;
     }
-    weatherWidget->updateFutureCityWeather(futrueList);
+    weatherWidget->updateFutureCityWeather(futureList);
+}
+
+void WeatherHttpJob::slotParseWarningWeather()
+{
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(QObject::sender());
+    reply->deleteLater();
+
+    QJsonDocument doc;
+    if (false == HttpClient::instance()->validateReplay(reply, doc)) {
+        return;
+    }
+
+    QJsonObject obj = doc.object();
+    if( 200 != obj.value("code").toString().toInt()){
+        return;
+    }
+
+    QJsonArray warningArray = obj.value("warning").toArray();
+    WeatherWidget *weatherWidget = qobject_cast<WeatherWidget *>(parent());
+    if (warningArray.size() == 0) {
+        // 清空极端天气信息
+        weatherWidget->updateWarningCityWeather(QList<CityWarningWeather>());
+        return;
+    }
+    /* 极端天气可能不止一种 */
+    QList<CityWarningWeather> warningList;
+    for (int i = 0; i < warningArray.size(); i++) {
+        CityWarningWeather warning;
+        QJsonObject json = warningArray.at(i).toObject();
+        warning.id = json.value("id").toString();
+        warning.pubTime = json.value("pubTime").toString();
+        warning.status = json.value("status").toString();
+        warning.level = json.value("level").toString();
+        warning.typeName = json.value("typeName").toString();
+        warning.text = json.value("text").toString();
+
+        warningList << warning;
+    }
+
+    weatherWidget->updateWarningCityWeather(warningList);
 }

@@ -25,6 +25,7 @@ private slots:
     void slotParseTodayAir();
     void slotParseTodayLife();
     void slotParseFutureWeather();
+    void slotParseWarningWeather();
 
 private:
     void getCurrentCityId();
@@ -32,6 +33,7 @@ private:
     void getTodayCityAir();
     void getTodayCityLife();
     void getFutureCityLife();
+    void getWarningCityWeather();
 
 //    void parseTodayCityLifeIndex(const QJsonArray &lifeIndexArray);
 //    void parseFutureCityWeather(const QJsonArray &futureArray);

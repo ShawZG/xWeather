@@ -12,7 +12,7 @@ AqiToolTip::AqiToolTip(QWidget *parent) : QWidget(parent)
 
 void AqiToolTip::initUI()
 {
-    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_TranslucentBackground);
     // 设置阴影边框;
     shadowEffect = new QGraphicsDropShadowEffect(this);

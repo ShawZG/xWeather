@@ -33,7 +33,8 @@ public:
     QNetworkReply *getTopCityRequest(QString cityNum = "20", QString range = "cn");
     /* 搜索城市 */
     QNetworkReply *getSearchCityRequest(QString cityName, int cityNum = 20, QString range = "cn");
-
+    /* 获取极端天气信息 */
+    QNetworkReply *getWarningCityWeatherRequest(QString cityId);
 private:
     QString getUrlWithData(QMap<QString, QString> data, QString url);
 

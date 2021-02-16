@@ -21,6 +21,7 @@ public:
     static void initPainter(QPainter &painter, QColor penColor, int fontSize);
     static QColor getAirQualityIndexColor(int aqi);
     static QRect adjustTextRect(const QRect &textRect, const QRect &optionRect);
+    static QColor getWarningLevelColor(const QString &warningLevel);
 };
 
 

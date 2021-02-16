@@ -75,6 +75,11 @@ void WeatherWidget::updateFutureCityWeather(QList<CityFutureWeather> list)
     futureCityListView->seFutureCityWeatherData(list);
 }
 
+void WeatherWidget::updateWarningCityWeather(QList<CityWarningWeather> list)
+{
+    todayCityFrame->setWarningCityWeather(list);
+}
+
 void WeatherWidget::setCityInfo(const QString &cityId, const QString &cityName)
 {
     this->cityId = cityId;

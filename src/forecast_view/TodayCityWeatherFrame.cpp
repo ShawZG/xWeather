@@ -1,7 +1,8 @@
 #include <QDateTime>
 #include <QMouseEvent>
-
+#include <QDebug>
 #include "AqiToolTip.h"
+#include "WarningToolTip.h"
 #include "CommonHelper.h"
 #include "SignalManager.h"
 #include "TodayCityWeatherFrame.h"
@@ -12,12 +13,16 @@ TodayCityWeatherFrame::TodayCityWeatherFrame(QWidget *parent) : QFrame(parent)
     aqiToolTip = new AqiToolTip(this);
     aqiToolTip->hide();
 
+    warningToolTip = new WarningToolTip(this);
+    warningToolTip->hide();
+
     initConnect();
 }
 
 void TodayCityWeatherFrame::initConnect()
 {
     connect(this, &TodayCityWeatherFrame::sigAqiToolTipVisible, this, &TodayCityWeatherFrame::slotAqiToolTipVisible);
+    connect(this, &TodayCityWeatherFrame::sigWarningToolTipVisible, this, &TodayCityWeatherFrame::slotWarningToolTipVisible);
 }
 
 void TodayCityWeatherFrame::setTodayCiytWeatherData(CityTodayWeather data)
@@ -25,6 +30,13 @@ void TodayCityWeatherFrame::setTodayCiytWeatherData(CityTodayWeather data)
     hasWeatherData = true;
     cityTodayWeather = data;
     update();
+}
+
+void TodayCityWeatherFrame::setWarningCityWeather(const QList<CityWarningWeather> &list)
+{
+    cityWarningInfoList.clear();
+    cityWarningRectList.clear();
+    cityWarningInfoList = list;
 }
 
 void TodayCityWeatherFrame::mousePressEvent(QMouseEvent *event)
@@ -64,6 +76,20 @@ void TodayCityWeatherFrame::mouseMoveEvent(QMouseEvent *event)
         isAqiToolTipLabelHover = !isAqiToolTipLabelHover;
         emit sigAqiToolTipVisible(isAqiToolTipLabelHover);
     }
+
+    bool isOneRectHover = false;
+    int  hoverRectIndex = -1;
+    for (int i = 0; i < cityWarningRectList.size(); i++) {
+        if (cityWarningRectList.at(i).contains(event->pos())) {
+            isOneRectHover = true;
+            hoverRectIndex = i;
+            break;
+        }
+    }
+    if (isWarningRectHover != isOneRectHover) {
+        isWarningRectHover = !isWarningRectHover;
+        emit sigWarningToolTipVisible(isWarningRectHover, hoverRectIndex);
+    }
 }
 
 void TodayCityWeatherFrame::paintEvent(QPaintEvent *event)
@@ -72,6 +98,7 @@ void TodayCityWeatherFrame::paintEvent(QPaintEvent *event)
     if (true == hasWeatherData) {
         paintLocationDate();
         paintUpdateTime();
+        paintWarningInfo();
         paintMajorWeather();
         paintMinorWeather();
     }
@@ -114,6 +141,43 @@ void TodayCityWeatherFrame::paintUpdateTime()
     QPoint buttonPoint = textRect.topRight() + QPoint(xMargin, (textRect.height() - buttonSize) / 2);
     refreshButtonRect = QRect(buttonPoint, QSize(buttonSize, buttonSize));
     painter.drawImage(refreshButtonRect, QImage(":/weather_icon/weather_icon/refresh.svg"));
+
+    //根据天气更新时间的坐标，得到预警天气信息的绘制开始的坐标
+    warningBeginPoint = QPoint(textRect.bottomRight().x() + 64, textRect.bottomRight().y() - 4);
+}
+
+void TodayCityWeatherFrame::paintWarningInfo()
+{
+    if (cityWarningInfoList.size() == 0) {
+            return;
+    }
+    cityWarningRectList.clear();
+
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    painter.translate(width(), warningBeginPoint.y());
+    QFontMetrics fontMetrics = painter.fontMetrics();
+    int height = fontMetrics.height();
+    int xMargin = 16;
+    QRect preWarningRect(this->width(), 0, 0 ,0);
+    for (int i = 0; i < cityWarningInfoList.size(); i++) {
+        QString warningTypeName = cityWarningInfoList.at(i).typeName;
+        int width = fontMetrics.horizontalAdvance(warningTypeName);
+        QRect warningBackgroundRect = QRect(0, 0,  width + 8, height + 8);
+        // 调整预警信息绘制的坐标
+        painter.translate(-(xMargin + warningBackgroundRect.width()), 0);
+
+        QColor backgroundColor = CommonHelper::getWarningLevelColor( cityWarningInfoList.at(i).level);
+        painter.setBrush(backgroundColor);
+        painter.setPen(QColor(Qt::transparent));
+        painter.drawRoundedRect(warningBackgroundRect, 5, 5);
+        CommonHelper::initPainter(painter, QColor("white"), painter.font().pixelSize());
+        painter.drawText(QRect(4, 3, width, height),warningTypeName);
+        //添加实际预警信息的坐标位置到warningRectList
+        QPoint warningLeftTopPoint(preWarningRect.topLeft().x() - xMargin - warningBackgroundRect.width(), warningBeginPoint.y());
+        preWarningRect = QRect(warningLeftTopPoint, QSize(warningBackgroundRect.width(), height));
+        cityWarningRectList << preWarningRect;
+    }
 }
 
 void TodayCityWeatherFrame::paintMajorWeather()
@@ -214,3 +278,22 @@ void TodayCityWeatherFrame::slotAqiToolTipVisible(bool isVisible)
     }
 }
 
+void TodayCityWeatherFrame::slotWarningToolTipVisible(bool isVisible, int index)
+{
+    if ( index >= cityWarningInfoList.size() || index < 0){
+        warningToolTip->hide();
+        return;
+    }
+
+    if (true == isVisible) {
+       warningToolTip->setWarningData(cityWarningInfoList.at(index));
+       QRect warningRect = cityWarningRectList.at(index);
+       int x = warningRect.bottomLeft().x() + warningRect.width() / 2 - warningToolTip->width() / 2;
+       int y = warningRect.bottomLeft().y() + 14;
+       warningToolTip->move(mapToGlobal(QPoint(x, y)));
+       warningToolTip->show();
+    }
+    else {
+        warningToolTip->hide();
+    }
+}

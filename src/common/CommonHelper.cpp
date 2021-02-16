@@ -133,3 +133,20 @@ QRect CommonHelper::adjustTextRect(const QRect &textRect, const QRect &optionRec
     }
     return newRect;
 }
+
+QColor CommonHelper::getWarningLevelColor(const QString &warningLevel)
+{
+    if (warningLevel == QString::fromLocal8Bit("白色")){
+        return QColor("#FFFFFF");
+    } else if (warningLevel == QString::fromLocal8Bit("蓝色")){
+        return QColor("#00A7FE");
+    } else if (warningLevel == QString::fromLocal8Bit("黄色")){
+        return QColor("#F6D707");
+    } else if (warningLevel == QString::fromLocal8Bit("橙色")){
+        return QColor("#EE6B14");
+    } else if (warningLevel == QString::fromLocal8Bit("红色")){
+        return QColor("#EC311E");
+    } else {
+        return QColor();
+    }
+}
