@@ -17,6 +17,15 @@ Assume that you are at the dir of project root.
 4. sudo make install
 ```
 
+You may modify the macro of ``Qt5_DIR`` on Windows or `CMAKE_PREFIX_PATH` on Linux.
+```cmake
+IF(CMAKE_SYSTEM_NAME MATCHES "Linux")
+    SET(CMAKE_PREFIX_PATH "/usr/lib/x86_64-linux-gnu/cmake")
+ELSEIF(CMAKE_SYSTEM_NAME MATCHES "Windows")
+    SET(Qt5_DIR "D:/Qt/Qt5.12.11/5.12.11/mingw73_64/lib/cmake/Qt5")
+ENDIF()
+```
+
 ##### 2.2 Uninstall
 Assume that you are at the build dir.
 ```shell
