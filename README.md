@@ -5,7 +5,13 @@ A crossed-platform weather application for desktop, built by Qt5 and Cmake.
 #### 1. Build Environment
 - Qt5(>5.9)
 - CMake(>3.3)
-  
+
+You may install `libqt5x11extras5-dev` to kill the cmake error from `FIND_PACKAGE(Qt5 COMPONENTS X11Extras REQUIRED)`.
+
+```shell
+sudo apt install libqt5x11extras5-dev
+```
+
 #### 2. Build Step
 
 ##### 2.1 Install 
