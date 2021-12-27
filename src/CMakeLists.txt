@@ -57,12 +57,10 @@ ELSE()
     TARGET_LINK_LIBRARIES(${APP_NAME} Qt5::Core Qt5::Widgets Qt5::Network ${3RD_LIBS})
 ENDIF()
 
-INSTALL(TARGETS ${APP_NAME} RUNTIME DESTINATION /opt/apps/xzg/)
-INSTALL(FILES ${PROJECT_SOURCE_DIR}/data/xweather.desktop
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
-INSTALL(FILES ${PROJECT_SOURCE_DIR}/data/org.xzg.xweather.svg
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps)
-
+INSTALL(TARGETS ${APP_NAME} RUNTIME DESTINATION /opt/apps/org.xzg.xweather/files/)
+INSTALL(FILES ${PROJECT_SOURCE_DIR}/data/xweather.desktop DESTINATION /opt/apps/org.xzg.xweather/entries/applications/)
+INSTALL(FILES ${PROJECT_SOURCE_DIR}/data/org.xzg.xweather.svg DESTINATION /opt/apps/org.xzg.xweather/entries/icons/hicolor/scalable/apps/)
+INSTALL(FILES ${PROJECT_SOURCE_DIR}/data/info DESTINATION /opt/apps/org.xzg.xweather/)
 #构建DEB包
 SET(CPACK_GENERATOR "DEB")
 SET(CPACK_PACKAGE_NAME "org.xzg.xweather")
@@ -73,4 +71,3 @@ SET(CPACK_DEBIAN_PACKAGE_VERSION ${PACKAGE_VERSION})
 SET(CPACK_DEBIAN_PACKAGE_PRIORITY "Optional")
 SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5core5a, libqt5widgets5, libqt5network5, libqt5gui5")
 INCLUDE(CPack)
-

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Categories=Network
+Comment=Show weather conditions and forecast
+Comment[zh_CN]=显示天气状况和天气预报
+Exec=/opt/apps/org.xzg.xweather/files/xweather
+GenericName=XWeather
+GenericName[zh_CN]=简单天气
+Icon=/opt/apps/org.xzg.xweather/entries/icons/hicolor/scalable/apps/org.xzg.xweather.svg
+Keywords=Weather;Forecast
+Keywords[zh_CN]=Weather;Forecast;天气;预报;
+Name=XWeather
+Name[zh_CN]=简单天气
+Type=Application
+X-Deepin-Vendor=user-custom
