@@ -18,9 +18,7 @@ HttpClient::HttpClient(QObject *parent) : QObject(parent)
 
 HttpClient::~HttpClient()
 {
-    if (nullptr != manager) {
-        delete manager;
-    }
+    delete manager;
 }
 
 HttpClient *HttpClient::instance()
@@ -42,9 +40,9 @@ bool HttpClient::validateReplay(QNetworkReply *reply, QJsonDocument &doc)
     qDebug() << reply->request().url().url();
     qDebug() << QString(jsonByte);
 #endif
-    QJsonParseError jsonError;
+    QJsonParseError jsonError{};
     doc = QJsonDocument::fromJson(jsonByte, &jsonError);
-    if ( true == doc.isNull()) {
+    if (doc.isNull()) {
 #ifdef QT_DEBUG
         qDebug() << reply->request().url().url();
         qDebug() << jsonError.errorString();
@@ -61,13 +59,13 @@ QNetworkReply *HttpClient::getCurrentCityLocationRequest()
     return manager->get(QNetworkRequest(url));
 }
 
-QString HttpClient::getUrlWithData(QMap<QString, QString> data, QString url)
+QString HttpClient::getUrlWithData(QMap<QString, QString> data, const QString &url)
 {
 #ifdef QT_DEBUG
     QMap<QString, QString> params = data;
     params["key"] = AppConfig::getAppKey();
     QStringList paramsStrList;
-    for(auto key : params.keys()) {
+    for(const auto& key : params.keys()) {
         paramsStrList << key + "=" + params.value(key);
     }
     QString paramsStr = paramsStrList.join("&");
@@ -86,7 +84,7 @@ QString HttpClient::getUrlWithData(QMap<QString, QString> data, QString url)
 #endif
 }
 
-QNetworkReply *HttpClient::getCurrentCityIdRequest(QString location)
+QNetworkReply *HttpClient::getCurrentCityIdRequest(const QString &location)
 {
     QMap<QString, QString> params;
     params["location"] = location;
@@ -99,7 +97,7 @@ QNetworkReply *HttpClient::getCurrentCityIdRequest(QString location)
 //    return manager->get(QNetworkRequest(url));
 }
 
-QNetworkReply *HttpClient::getTodayCityWeatherRequest(QString cityId)
+QNetworkReply *HttpClient::getTodayCityWeatherRequest(const QString &cityId)
 {
     QMap<QString, QString> params;
     params["location"] = cityId;
@@ -111,7 +109,7 @@ QNetworkReply *HttpClient::getTodayCityWeatherRequest(QString cityId)
 //    return manager->get(QNetworkRequest(url));
 }
 
-QNetworkReply *HttpClient::getTodayCityAirRequest(QString cityId)
+QNetworkReply *HttpClient::getTodayCityAirRequest(const QString &cityId)
 {
     QMap<QString, QString> params;
     params["location"] = cityId;
@@ -123,7 +121,7 @@ QNetworkReply *HttpClient::getTodayCityAirRequest(QString cityId)
 //    return manager->get(QNetworkRequest(url));
 }
 
-QNetworkReply *HttpClient::getTodayCityLifeRequest(QString cityId)
+QNetworkReply *HttpClient::getTodayCityLifeRequest(const QString &cityId)
 {
     QMap<QString, QString> params;
     params["location"] = cityId;
@@ -136,7 +134,7 @@ QNetworkReply *HttpClient::getTodayCityLifeRequest(QString cityId)
 //    return manager->get(QNetworkRequest(url));
 }
 
-QNetworkReply *HttpClient::getFutureCityWeatherRequest(QString cityId)
+QNetworkReply *HttpClient::getFutureCityWeatherRequest(const QString &cityId)
 {
     QMap<QString, QString> params;
     params["location"] = cityId;
@@ -148,7 +146,7 @@ QNetworkReply *HttpClient::getFutureCityWeatherRequest(QString cityId)
 //    return manager->get(QNetworkRequest(url));
 }
 
-QNetworkReply *HttpClient::getTopCityRequest(QString cityNum, QString range)
+QNetworkReply *HttpClient::getTopCityRequest(const QString &cityNum, const QString &range)
 {
     QMap<QString, QString> params;
     params["range"] = range;
@@ -157,7 +155,7 @@ QNetworkReply *HttpClient::getTopCityRequest(QString cityNum, QString range)
     return manager->get(QNetworkRequest(url));
 }
 
-QNetworkReply *HttpClient::getSearchCityRequest(QString cityName, int cityNum, QString range)
+QNetworkReply *HttpClient::getSearchCityRequest(const QString &cityName, int cityNum, const QString &range)
 {
     QMap<QString, QString> params;
     params["location"] = cityName;
@@ -167,7 +165,7 @@ QNetworkReply *HttpClient::getSearchCityRequest(QString cityName, int cityNum, Q
     return manager->get(QNetworkRequest(url));
 }
 
-QNetworkReply *HttpClient::getWarningCityWeatherRequest(QString cityId)
+QNetworkReply *HttpClient::getWarningCityWeatherRequest(const QString &cityId)
 {
     QMap<QString, QString> params;
     params["location"] = cityId;

@@ -75,7 +75,7 @@ void MainDialog::initTitleMenu()
 void MainDialog::initMainWidget()
 {
     /* 默认显示当前所在城市天气 */
-    WeatherWidget *weatherWidget = new WeatherWidget(QString(), QString());
+    auto weatherWidget = new WeatherWidget(QString(), QString());
     weatherStackWidget = new QStackedWidget();
     weatherStackWidget->addWidget(weatherWidget);
     weatherWidgetList.append(weatherWidget);
@@ -88,7 +88,7 @@ void MainDialog::initMainWidget()
     pageDownButton->setFixedSize(64, 400);
     pageDownButton->setObjectName("pageDownButton");
 
-    QGridLayout *gLayout = new QGridLayout();
+    auto gLayout = new QGridLayout();
     gLayout->setContentsMargins(0, 0, 0, 0);
     gLayout->addWidget(weatherStackWidget, 0, 0, 1, 1);
     gLayout->addWidget(pageUpButton, 0, 0, 1, 1, Qt::AlignLeft | Qt::AlignHCenter);
@@ -145,7 +145,7 @@ void MainDialog::slotAddWeatherWidget(const QString &cityName, const QString &ci
         }
     }
 
-    WeatherWidget *weatherWidget = new WeatherWidget(cityId, cityName);
+    auto weatherWidget = new WeatherWidget(cityId, cityName);
     weatherStackWidget->addWidget(weatherWidget);
     weatherWidgetList.append(weatherWidget);
     weatherStackWidget->setCurrentWidget(weatherWidget);
@@ -184,7 +184,7 @@ void MainDialog::slotDelWeatherWidget(const QString &cityName, const QString &ci
 
 void MainDialog::slotShowPrevCityWeather()
 {
-    WeatherWidget* curWidget = qobject_cast<WeatherWidget*>(weatherStackWidget->currentWidget());
+    auto curWidget = qobject_cast<WeatherWidget*>(weatherStackWidget->currentWidget());
 
     int index;
     for (index = 0; index < weatherWidgetList.size(); index++) {
@@ -201,7 +201,7 @@ void MainDialog::slotShowPrevCityWeather()
 
 void MainDialog::slotShowNextCityWeather()
 {
-    WeatherWidget* curWidget = qobject_cast<WeatherWidget*>(weatherStackWidget->currentWidget());
+    auto curWidget = qobject_cast<WeatherWidget*>(weatherStackWidget->currentWidget());
 
     int index;
     for (index = 0; index < weatherWidgetList.size(); index++) {

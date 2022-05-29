@@ -25,7 +25,7 @@ void TodayCityWeatherFrame::initConnect()
     connect(this, &TodayCityWeatherFrame::sigWarningToolTipVisible, this, &TodayCityWeatherFrame::slotWarningToolTipVisible);
 }
 
-void TodayCityWeatherFrame::setTodayCiytWeatherData(CityTodayWeather data)
+void TodayCityWeatherFrame::setTodayCityWeatherData(CityTodayWeather data)
 {
     hasWeatherData = true;
     cityTodayWeather = data;
@@ -48,14 +48,14 @@ void TodayCityWeatherFrame::mousePressEvent(QMouseEvent *event)
 void TodayCityWeatherFrame::mouseReleaseEvent(QMouseEvent *event)
 {
     isRefreshButtonReleased = refreshButtonRect.contains(event->pos());
-    if (true == isRefreshButtonPressed && true == isRefreshButtonReleased){
+    if (isRefreshButtonPressed && isRefreshButtonReleased){
         emit sigUpdateWeather();
     }
     isRefreshButtonPressed = false;
     isRefreshButtonReleased = false;
 
     isLocationButtonReleased = locationButtonRect.contains(event->pos());
-    if (true == isLocationButtonPressed && true == isLocationButtonReleased){
+    if (isLocationButtonPressed && isLocationButtonReleased){
         emit SignalManager::instance()->sigShowAddCityDialog();
     }
     isLocationButtonPressed = false;
@@ -94,8 +94,8 @@ void TodayCityWeatherFrame::mouseMoveEvent(QMouseEvent *event)
 
 void TodayCityWeatherFrame::paintEvent(QPaintEvent *event)
 {
-    Q_UNUSED(event);
-    if (true == hasWeatherData) {
+    Q_UNUSED(event)
+    if (hasWeatherData) {
         paintLocationDate();
         paintUpdateTime();
         paintWarningInfo();
@@ -109,15 +109,11 @@ void TodayCityWeatherFrame::paintLocationDate()
     QPainter painter(this);
     CommonHelper::initPainter(painter, QColor("white"), 20);
     /* 绘制坐标点 */
-    QString imagePath = (true == isLocationButtonHover)
-                        ? ":/weather_icon/weather_icon/add_city.svg"
-                        : ":/weather_icon/weather_icon/location.svg";
+    QString imagePath = isLocationButtonHover ? ":/weather_icon/weather_icon/add_city.svg" : ":/weather_icon/weather_icon/location.svg";
     locationButtonRect = QRect(16, 16, 28, 28);
     painter.drawImage(locationButtonRect, QImage(imagePath));
     /* 绘制城市，日期 */
-    QString str = QString("%1 %2 %3").arg(cityTodayWeather.cityName)
-                                     .arg(cityTodayWeather.date)
-                                     .arg(cityTodayWeather.week);
+    QString str = QString("%1 %2 %3").arg(cityTodayWeather.cityName, cityTodayWeather.date, cityTodayWeather.week);
     QPoint textPoint(locationButtonRect.topRight().x() + 10, locationButtonRect.topRight().y());
     QRect textRect = CommonHelper::textPaintRect(painter.font(), textPoint, str);
     painter.drawText(textRect, Qt::AlignLeft | Qt::AlignCenter, str);
@@ -136,7 +132,7 @@ void TodayCityWeatherFrame::paintUpdateTime()
     painter.drawText(textRect, updateStr);
 
     /* 绘制刷新按钮 */
-    int buttonSize = (true == isRefreshButtonHover) ? 32 : 24;
+    int buttonSize = isRefreshButtonHover ? 32 : 24;
     int xMargin = 20 - (buttonSize - 20) / 2;
     QPoint buttonPoint = textRect.topRight() + QPoint(xMargin, (textRect.height() - buttonSize) / 2);
     refreshButtonRect = QRect(buttonPoint, QSize(buttonSize, buttonSize));
@@ -148,7 +144,7 @@ void TodayCityWeatherFrame::paintUpdateTime()
 
 void TodayCityWeatherFrame::paintWarningInfo()
 {
-    if (cityWarningInfoList.size() == 0) {
+    if (cityWarningInfoList.empty()) {
             return;
     }
     cityWarningRectList.clear();
@@ -203,7 +199,7 @@ void TodayCityWeatherFrame::paintMajorWeather()
     QRect weatherDescRect = CommonHelper::textPaintRect(painter.font(), weatherDescPoint, cityTodayWeather.weatherDesc);
     painter.drawText(weatherDescRect, cityTodayWeather.weatherDesc);
     /* 绘制最低和最高温度数字 */
-    QString tempLimitStr = QString("%1/%2").arg(cityTodayWeather.temperatureLow).arg(cityTodayWeather.temperatureHigh);
+    QString tempLimitStr = QString("%1/%2").arg(cityTodayWeather.temperatureLow, cityTodayWeather.temperatureHigh);
     QPoint tempLimitPoint(weatherDescRect.bottomLeft().x(), weatherDescRect.bottomLeft().y() + 20);
     CommonHelper::initPainter(painter, QColor("white"), 28);
     QRect tempLimitRect = CommonHelper::textPaintRect(painter.font(), tempLimitPoint, tempLimitStr);
@@ -257,7 +253,7 @@ void TodayCityWeatherFrame::paintMinorWeather()
 
 void TodayCityWeatherFrame::slotAqiToolTipVisible(bool isVisible)
 {
-    if (true == isVisible) {
+    if (isVisible) {
         CityAqi aqiData;
         aqiData.primary = cityTodayWeather.primary;
         aqiData.pm10 = cityTodayWeather.pm10;
@@ -285,11 +281,12 @@ void TodayCityWeatherFrame::slotWarningToolTipVisible(bool isVisible, int index)
         return;
     }
 
-    if (true == isVisible) {
+    if (isVisible) {
        warningToolTip->setWarningData(cityWarningInfoList.at(index));
        QRect warningRect = cityWarningRectList.at(index);
        int x = warningRect.bottomLeft().x() + warningRect.width() / 2 - warningToolTip->width() / 2;
-       int y = warningRect.bottomLeft().y() + 14;
+       int y = warningRect.bottomLeft().y() + 16;
+//       warningToolTip->move(x, y);
        warningToolTip->move(mapToGlobal(QPoint(x, y)));
        warningToolTip->show();
     }

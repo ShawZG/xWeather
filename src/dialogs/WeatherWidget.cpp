@@ -62,7 +62,7 @@ void WeatherWidget::initWeatherHttpJob()
 
 void WeatherWidget::updateTodayCityWeather(CityTodayWeather data)
 {
-    todayCityFrame->setTodayCiytWeatherData(data);
+    todayCityFrame->setTodayCityWeatherData(data);
 }
 
 void WeatherWidget::updateTodayLifyIndex(QList<CityLifeIndex> list)

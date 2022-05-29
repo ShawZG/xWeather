@@ -21,7 +21,7 @@ void AqiToolTip::initUI()
     shadowEffect->setBlurRadius(10);
     setGraphicsEffect(shadowEffect);
 
-    setFixedSize(200, 200);
+    setFixedSize(170, 160);
 }
 
 void AqiToolTip::setAqiData(CityAqi cityAqiData)
@@ -63,11 +63,11 @@ void AqiToolTip::paintBackground()
 
 void AqiToolTip::paintForeground()
 {
-    int LINE_MARGIN = 10;
+    int LINE_MARGIN =  6;
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
-    CommonHelper::initPainter(painter, QColor("white"), 15);
+    CommonHelper::initPainter(painter, QColor("white"), 12);
     /* 主要污染物 */
     QString primaryStr = QString("主要污染物: %1").arg(aqiData.primary);
     QPoint primaryPoint(15, LINE_MARGIN);

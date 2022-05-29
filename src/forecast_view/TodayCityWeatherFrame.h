@@ -12,7 +12,7 @@ class TodayCityWeatherFrame : public QFrame
     Q_OBJECT
 public:
     explicit TodayCityWeatherFrame(QWidget *parent = nullptr);
-    void setTodayCiytWeatherData(CityTodayWeather data);
+    void setTodayCityWeatherData(CityTodayWeather data);
     void setWarningCityWeather(const QList<CityWarningWeather> &list);
 
 protected:
@@ -30,7 +30,6 @@ signals:
 private slots:
     void slotAqiToolTipVisible(bool isVisible);
     void slotWarningToolTipVisible(bool isVisible, int index);
-
 
 private:
     void initConnect();
@@ -63,7 +62,6 @@ private:
     QPoint       warningBeginPoint;
     QList<QRect>    cityWarningRectList;
     WarningToolTip  *warningToolTip = nullptr;
-
 };
 
 #endif // TODAYCITYWEATHERFRAME_H

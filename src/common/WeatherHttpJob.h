@@ -11,7 +11,7 @@ class WeatherHttpJob : public QWidget
 {
     Q_OBJECT
 public:
-    explicit WeatherHttpJob(QString cityId, QString cityName, QWidget *parent = nullptr);
+    explicit WeatherHttpJob(const QString &cityId, const QString &cityName, QWidget *parent = nullptr);
     ~WeatherHttpJob();
 
     void   updateWeather();

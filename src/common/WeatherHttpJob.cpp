@@ -11,11 +11,11 @@
 #include "WeatherWidget.h"
 #include "WeatherHttpJob.h"
 
-WeatherHttpJob::WeatherHttpJob(QString cityId,QString cityName, QWidget *parent)
+WeatherHttpJob::WeatherHttpJob(const QString &cityId, const QString &cityName, QWidget *parent)
     : QWidget(parent), cityId(cityId), cityName(cityName)
 {
     updateTimer = new QTimer();
-    if(true == cityId.isEmpty()) {
+    if(cityId.isEmpty()) {
         getCurrentCityId();
     } else {
         updateWeather();
@@ -68,11 +68,11 @@ void WeatherHttpJob::getCurrentCityId()
 
 void WeatherHttpJob::slotParseCurrentCityLocation()
 {
-    QNetworkReply *reply =  qobject_cast<QNetworkReply *>(QObject::sender());
+    auto reply =  qobject_cast<QNetworkReply *>(QObject::sender());
     reply->deleteLater();
 
     QJsonDocument doc;
-    if ( false == HttpClient::validateReplay(reply, doc)) {
+    if (not HttpClient::validateReplay(reply, doc)) {
         return;
     }
 
@@ -81,18 +81,18 @@ void WeatherHttpJob::slotParseCurrentCityLocation()
         QString latitude = QString::number(obj.value("lat").toDouble());
         QString longitude = QString::number(obj.value("lon").toDouble());
         QString location = longitude + "," + latitude;
-        QNetworkReply *reply = HttpClient::instance()->getCurrentCityIdRequest(location);
-        connect(reply, &QNetworkReply::finished, this, &WeatherHttpJob::slotParseCurrentCityId);
+        QNetworkReply *currentCityReply = HttpClient::instance()->getCurrentCityIdRequest(location);
+        connect(currentCityReply, &QNetworkReply::finished, this, &WeatherHttpJob::slotParseCurrentCityId);
     }
 }
 
 void WeatherHttpJob::slotParseCurrentCityId()
 {
-    QNetworkReply *reply =  qobject_cast<QNetworkReply *>(QObject::sender());
+    auto reply =  qobject_cast<QNetworkReply *>(QObject::sender());
     reply->deleteLater();
 
     QJsonDocument doc;
-    if ( false == HttpClient::validateReplay(reply, doc)) {
+    if (!HttpClient::validateReplay(reply, doc)) {
         return;
     }
 
@@ -105,7 +105,7 @@ void WeatherHttpJob::slotParseCurrentCityId()
    cityId = cityObj.value("id").toString();
    cityName = cityObj.value("name").toString();
 
-   WeatherWidget *weatherWidget = qobject_cast<WeatherWidget *>(parent());
+   auto weatherWidget = qobject_cast<WeatherWidget *>(parent());
    weatherWidget->setCityInfo(cityId, cityName);
 
    updateWeather();
@@ -119,11 +119,11 @@ void WeatherHttpJob::getTodayCityWeather()
 
 void WeatherHttpJob::slotParseTodayWeather()
 {
-    QNetworkReply *reply = qobject_cast<QNetworkReply *>(QObject::sender());
+    auto *reply = qobject_cast<QNetworkReply *>(QObject::sender());
     reply->deleteLater();
 
     QJsonDocument doc;
-    if (false == HttpClient::instance()->validateReplay(reply, doc)) {
+    if (not HttpClient::instance()->validateReplay(reply, doc)) {
         return;
     }
 
@@ -161,7 +161,7 @@ void WeatherHttpJob::slotParseTodayWeather()
 //    cityTodayWeather.alarmLevel = todayOjb.value("alarm_level").toString();
 //    cityTodayWeather.alarmContent = todayOjb.value("alarm_content").toString();
 
-    WeatherWidget *weatherWidget = qobject_cast<WeatherWidget *>(parent());
+    auto weatherWidget = qobject_cast<WeatherWidget *>(parent());
     weatherWidget->updateTodayCityWeather(cityTodayWeather);
 }
 
@@ -173,11 +173,11 @@ void WeatherHttpJob::getTodayCityAir()
 
 void WeatherHttpJob::slotParseTodayAir()
 {
-    QNetworkReply *reply = qobject_cast<QNetworkReply *>(QObject::sender());
+    auto reply = qobject_cast<QNetworkReply *>(QObject::sender());
     reply->deleteLater();
 
     QJsonDocument doc;
-    if (false == HttpClient::instance()->validateReplay(reply, doc)) {
+    if (not  HttpClient::instance()->validateReplay(reply, doc)) {
         return;
     }
 
@@ -198,7 +198,7 @@ void WeatherHttpJob::slotParseTodayAir()
     cityTodayWeather.co = nowOjb.value("co").toString();
     cityTodayWeather.o3 = nowOjb.value("o3").toString();
 
-    WeatherWidget *weatherWidget = qobject_cast<WeatherWidget *>(parent());
+    auto *weatherWidget = qobject_cast<WeatherWidget *>(parent());
     weatherWidget->updateTodayCityWeather(cityTodayWeather);
 }
 
@@ -210,11 +210,11 @@ void WeatherHttpJob::getTodayCityLife()
 
 void WeatherHttpJob::slotParseTodayLife()
 {
-    QNetworkReply *reply = qobject_cast<QNetworkReply *>(QObject::sender());
+    auto *reply = qobject_cast<QNetworkReply *>(QObject::sender());
     reply->deleteLater();
 
     QJsonDocument doc;
-    if (false == HttpClient::instance()->validateReplay(reply, doc)) {
+    if (not HttpClient::instance()->validateReplay(reply, doc)) {
         return;
     }
 
@@ -286,7 +286,7 @@ void WeatherHttpJob::slotParseTodayLife()
             list << cityTodayLife;
         }
     }
-    WeatherWidget *weatherWidget = qobject_cast<WeatherWidget *>(parent());
+    auto weatherWidget = qobject_cast<WeatherWidget *>(parent());
     weatherWidget->updateTodayLifyIndex(list);
 }
 
@@ -304,11 +304,11 @@ void WeatherHttpJob::getWarningCityWeather()
 
 void WeatherHttpJob::slotParseFutureWeather()
 {
-    QNetworkReply *reply = qobject_cast<QNetworkReply *>(QObject::sender());
+    auto reply = qobject_cast<QNetworkReply *>(QObject::sender());
     reply->deleteLater();
 
     QJsonDocument doc;
-    if (false == HttpClient::instance()->validateReplay(reply, doc)) {
+    if (not HttpClient::instance()->validateReplay(reply, doc)) {
         return;
     }
 
@@ -322,7 +322,7 @@ void WeatherHttpJob::slotParseFutureWeather()
     /* 获取当天的温度范围 */
     cityTodayWeather.temperatureLow = today.value("tempMin").toString();
     cityTodayWeather.temperatureHigh = today.value("tempMax").toString();
-    WeatherWidget *weatherWidget = qobject_cast<WeatherWidget *>(parent());
+    auto weatherWidget = qobject_cast<WeatherWidget *>(parent());
     weatherWidget->updateTodayCityWeather(cityTodayWeather);
 
     QList<CityFutureWeather> futureList;
@@ -348,11 +348,11 @@ void WeatherHttpJob::slotParseFutureWeather()
 
 void WeatherHttpJob::slotParseWarningWeather()
 {
-    QNetworkReply *reply = qobject_cast<QNetworkReply *>(QObject::sender());
+    auto reply = qobject_cast<QNetworkReply *>(QObject::sender());
     reply->deleteLater();
 
     QJsonDocument doc;
-    if (false == HttpClient::instance()->validateReplay(reply, doc)) {
+    if (not HttpClient::instance()->validateReplay(reply, doc)) {
         return;
     }
 
@@ -362,8 +362,8 @@ void WeatherHttpJob::slotParseWarningWeather()
     }
 
     QJsonArray warningArray = obj.value("warning").toArray();
-    WeatherWidget *weatherWidget = qobject_cast<WeatherWidget *>(parent());
-    if (warningArray.size() == 0) {
+    auto weatherWidget = qobject_cast<WeatherWidget *>(parent());
+    if (warningArray.empty()) {
         // 清空极端天气信息
         weatherWidget->updateWarningCityWeather(QList<CityWarningWeather>());
         return;

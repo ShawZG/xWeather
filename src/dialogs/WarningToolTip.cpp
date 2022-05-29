@@ -16,7 +16,7 @@
 const int TRIANGLE_WIDTH = 40;
 const int TRIANGLE_HEIGHT = 20;
 const int TEXT_MARGIN = 8;
-const int WIDGET_WIDHT = 260;
+const int WIDGET_WIDTH = 260;
 
 WarningToolTip::WarningToolTip(QWidget *parent) : QWidget(parent)
 {
@@ -36,50 +36,53 @@ void WarningToolTip::initUI()
 
 //  QFontMetrics::boundingRect返回的绘制文字的QRect信息不准确，
 //  故不使用此方法，直接把文字信息放在QLabel中。
+    QFont font;
+    font.setPointSizeF(12);
     textLabel = new QLabel();
+    textLabel->setFont(font);
     textLabel->setWordWrap(true);
     textLabel->setFrameShape(QFrame::NoFrame);
     textLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
-    QVBoxLayout *vLayout = new QVBoxLayout();
+    auto vLayout = new QVBoxLayout();
     vLayout->setContentsMargins(TEXT_MARGIN, TRIANGLE_HEIGHT + TEXT_MARGIN, TEXT_MARGIN, TEXT_MARGIN);
     vLayout->addWidget(textLabel);
     setLayout(vLayout);
 
-    setFixedWidth(WIDGET_WIDHT);
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 }
 
 void WarningToolTip::updateWidgetSize()
 {
 //    QRect originRect(QPoint(TEXT_MARGIN, TRIANGLE_HEIGHT + TEXT_MARGIN),
-//                     QSize(WIDGET_WIDHT - TEXT_MARGIN * 2, WIDGET_HEIGHT));
-
+//                     QSize(WIDGET_WIDTH - TEXT_MARGIN * 2, WIDGET_HEIGHT));
+//
 //    QFont f = font();
 //    f.setPixelSize(FONT_SIZE);
 //    setFont(f);
-
+//
 //    QFontMetrics metrics(f);
 //    qDebug() << "----" << metrics.boundingRect(originRect, Qt::AlignVCenter | Qt::AlignLeft | Qt::TextWordWrap, warningData.text);
-
+//
 //    textRect = fontMetrics().boundingRect(originRect, Qt::AlignVCenter | Qt::AlignLeft | Qt::TextWordWrap, warningData.text);
 //    int strWidth = fontMetrics().horizontalAdvance(warningData.text);
 //    int strHeight = fontMetrics().lineSpacing();
-
-//    int drawTextHeight = ( strWidth / (WIDGET_WIDHT - TEXT_MARGIN * 2) + 2) * strHeight;
+//
+//    int drawTextHeight = ( strWidth / (WIDGET_WIDTH - TEXT_MARGIN * 2) + 2) * strHeight;
 //    QRect newtextRect = QRect(originRect.topLeft(), QSize(originRect.width(), drawTextHeight));
 //    qDebug() << strWidth << strHeight;
 //    qDebug() << "origin rect" << originRect;
 //    qDebug() << "new rect" << textRect;
 //    qDebug() << "newtextRect" << newtextRect;
-
-//    setFixedSize(WIDGET_WIDHT, textRect.height() + TRIANGLE_HEIGHT + TEXT_MARGIN * 2);
+//
+//    setFixedSize(WIDGET_WIDTH, textRect.height() + TRIANGLE_HEIGHT + TEXT_MARGIN * 2);
 }
 
 void WarningToolTip::setWarningData(const CityWarningWeather &cityWarningData)
 {
     warningData = cityWarningData;
     textLabel->setText(warningData.text);
+//    setFixedSize(WIDGET_WIDTH, textLabel->sizeHint().height() + 20);
 }
 
 void WarningToolTip::paintEvent(QPaintEvent *event)

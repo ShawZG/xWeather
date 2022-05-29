@@ -82,7 +82,7 @@ void CommonHelper::initPainter(QPainter &painter, QColor penColor, int fontSize)
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setPen(penColor);
     QFont font = painter.font();
-    font.setPointSize(fontSize);
+    font.setPointSizeF(fontSize);
     painter.setFont(font);
 }
 
