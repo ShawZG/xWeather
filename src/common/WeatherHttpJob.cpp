@@ -6,7 +6,6 @@
 
 #include "WeatherHttpJob.h"
 #include "HttpClient.h"
-#include "CommonHelper.h"
 
 #include "WeatherWidget.h"
 #include "WeatherHttpJob.h"
@@ -42,17 +41,6 @@ void WeatherHttpJob::startJob(bool isSingleShot, int interval)
     Q_UNUSED(isSingleShot)
     Q_UNUSED(interval)
     updateTimer->stop();
-//    if (true == cityId.isEmpty()){
-
-//    }
-//    slotGetTodayCityWeather();
-//    slotGetFutureCityWeather();
-//    if (false == isSingleShot) {
-//        connect(updateTimer, &QTimer::timeout, this, &WeatherHttpJob::slotGetTodayCityWeather, Qt::UniqueConnection);
-//        updateTimer->setInterval(interval);
-//        updateTimer->setSingleShot(isSingleShot);
-//        updateTimer->start();
-//    }
 }
 
 void WeatherHttpJob::stopJob()
@@ -76,10 +64,11 @@ void WeatherHttpJob::slotParseCurrentCityLocation()
         return;
     }
 
-    QJsonObject obj = doc.object();
-    if ( "success" == obj.value("status").toString()) {
-        QString latitude = QString::number(obj.value("lat").toDouble());
-        QString longitude = QString::number(obj.value("lon").toDouble());
+    QJsonObject dataJson = doc.object().value("data").toObject();
+    if ( !dataJson.isEmpty() && dataJson.contains("location")) {
+        auto locationJson = dataJson.value("location").toObject();
+        QString latitude = QString::number(locationJson.value("latitude").toDouble(39.56));
+        QString longitude = QString::number(locationJson.value("longitude").toDouble(116.20));
         QString location = longitude + "," + latitude;
         QNetworkReply *currentCityReply = HttpClient::instance()->getCurrentCityIdRequest(location);
         connect(currentCityReply, &QNetworkReply::finished, this, &WeatherHttpJob::slotParseCurrentCityId);

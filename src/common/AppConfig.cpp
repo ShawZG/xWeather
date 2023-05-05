@@ -7,8 +7,8 @@
 QString     AppConfig::appVer = QString("%1.%2.%3").arg(PROJECT_VERSION_MAJOR).arg(PROJECT_VERSION_MINOR).arg(PROJECT_VERSION_PATCH);
 QSettings  *AppConfig::setting = nullptr;
 
-QString     AppConfig::apiAppId = "HE2009212252151619";
-QString     AppConfig::apiAppKey = "78846d95ed4d4b228fd383582ad5418c";
+QString     AppConfig::apiAppId = "";
+QString     AppConfig::apiAppKey = "";
 
 AppConfig::AppConfig(QObject *parent) : QObject(parent)
 {

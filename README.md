@@ -49,3 +49,10 @@ Then, you will find a deb packet at build dir.
 #### 4. Release Deb packet
 You can download the .deb packet in release page and install it, if your distribution linux is deepin(v20) or uos(v20).
 The .deb packet is built by Qt5.11.3 in release page, so you may not be enable to install the .deb in other distribution linux.
+
+#### 5. Api Token
+I have deleted the api token because some people stole my token. You can apply token at [https://dev.qweather.com/docs/](!https://dev.qweather.com/docs/), and assign them to  **AppConfig::apiAppId** and **AppConfig::apiAppKey** in file **AppConfig.cpp**
+```c++
+QString     AppConfig::apiAppId = "";
+QString     AppConfig::apiAppKey = "";
+```

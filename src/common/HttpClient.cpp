@@ -4,7 +4,6 @@
 #include <QJsonDocument>
 #include <QNetworkReply>
 #include <QTextCodec>
-
 #include "CommonHelper.h"
 #include "AppConfig.h"
 #include "HttpClient.h"
@@ -55,7 +54,7 @@ bool HttpClient::validateReplay(QNetworkReply *reply, QJsonDocument &doc)
 
 QNetworkReply *HttpClient::getCurrentCityLocationRequest()
 {
-    QString url = QString("http://ip-api.com/json/");
+    QString url = QString("https://api.ipbase.com/v2/info");
     return manager->get(QNetworkRequest(url));
 }
 
@@ -89,36 +88,24 @@ QNetworkReply *HttpClient::getCurrentCityIdRequest(const QString &location)
     QMap<QString, QString> params;
     params["location"] = location;
     params["number"] = QString("1");
-    QString url = getUrlWithData(params, "https://geoapi.heweather.net/v2/city/lookup");
+    QString url = getUrlWithData(params, "https://geoapi.qweather.com/v2/city/lookup");
     return manager->get(QNetworkRequest(url));
-
-//    QString url = QString("https://geoapi.heweather.net/v2/city/lookup?location=%1&number=1&key=%2")
-//            .arg(location).arg(AppConfig::getAppKey());
-//    return manager->get(QNetworkRequest(url));
 }
 
 QNetworkReply *HttpClient::getTodayCityWeatherRequest(const QString &cityId)
 {
     QMap<QString, QString> params;
     params["location"] = cityId;
-    QString url = getUrlWithData(params, "https://devapi.heweather.net/v7/weather/now");
+    QString url = getUrlWithData(params, "https://devapi.qweather.com/v7/weather/now");
     return manager->get(QNetworkRequest(url));
-
-//    QString url = QString("https://devapi.heweather.net/v7/weather/now?location=%1&key=%2")
-//                  .arg(cityId).arg(AppConfig::getAppKey());
-//    return manager->get(QNetworkRequest(url));
 }
 
 QNetworkReply *HttpClient::getTodayCityAirRequest(const QString &cityId)
 {
     QMap<QString, QString> params;
     params["location"] = cityId;
-    QString url = getUrlWithData(params, "https://devapi.heweather.net/v7/air/now");
+    QString url = getUrlWithData(params, "https://devapi.qweather.com/v7/air/now");
     return manager->get(QNetworkRequest(url));
-
-//    QString url = QString("https://devapi.heweather.net/v7/air/now?location=%1&key=%2")
-//            .arg(cityId).arg(AppConfig::getAppKey());
-//    return manager->get(QNetworkRequest(url));
 }
 
 QNetworkReply *HttpClient::getTodayCityLifeRequest(const QString &cityId)
@@ -126,24 +113,16 @@ QNetworkReply *HttpClient::getTodayCityLifeRequest(const QString &cityId)
     QMap<QString, QString> params;
     params["location"] = cityId;
     params["type"] = "0";
-    QString url = getUrlWithData(params, "https://devapi.heweather.net/v7/indices/1d");
+    QString url = getUrlWithData(params, "https://devapi.qweather.com/v7/indices/1d");
     return manager->get(QNetworkRequest(url));
-
-//    QString url = QString("https://devapi.heweather.net/v7/indices/1d?location=%1&type=0&key=%2")
-//            .arg(cityId).arg(AppConfig::getAppKey());
-//    return manager->get(QNetworkRequest(url));
 }
 
 QNetworkReply *HttpClient::getFutureCityWeatherRequest(const QString &cityId)
 {
     QMap<QString, QString> params;
     params["location"] = cityId;
-    QString url = getUrlWithData(params, "https://devapi.heweather.net/v7/weather/7d");
+    QString url = getUrlWithData(params, "https://devapi.qweather.com/v7/weather/7d");
     return manager->get(QNetworkRequest(url));
-
-//    QString url = QString("https://devapi.heweather.net/v7/weather/3d?location=%1&key=%2")
-//                  .arg(cityId).arg(AppConfig::getAppKey());
-//    return manager->get(QNetworkRequest(url));
 }
 
 QNetworkReply *HttpClient::getTopCityRequest(const QString &cityNum, const QString &range)
@@ -151,7 +130,7 @@ QNetworkReply *HttpClient::getTopCityRequest(const QString &cityNum, const QStri
     QMap<QString, QString> params;
     params["range"] = range;
     params["number"] = cityNum;
-    QString url = getUrlWithData(params, "https://geoapi.heweather.net/v2/city/top");
+    QString url = getUrlWithData(params, "https://geoapi.qweather.com/v2/city/top");
     return manager->get(QNetworkRequest(url));
 }
 
@@ -161,7 +140,7 @@ QNetworkReply *HttpClient::getSearchCityRequest(const QString &cityName, int cit
     params["location"] = cityName;
     params["range"] = range;
     params["number"] = QString::number(cityNum);
-    QString url = getUrlWithData(params, "https://geoapi.heweather.net/v2/city/lookup");
+    QString url = getUrlWithData(params, "https://geoapi.qweather.com/v2/city/lookup");
     return manager->get(QNetworkRequest(url));
 }
 
