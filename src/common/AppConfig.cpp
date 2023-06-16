@@ -33,7 +33,7 @@ QString AppConfig::getUserAppId()
     return AppConfig::getConfig("public_id", QString()).toString();
 }
 
-void AppConfig::setUserAppId(QString appId)
+void AppConfig::setUserAppId(const QString& appId)
 {
     AppConfig::setConfig("public_id", appId);
 }
@@ -43,7 +43,7 @@ QString AppConfig::getUserAppKey()
     return AppConfig::getConfig("key", QString()).toString();
 }
 
-void AppConfig::setUserAppKey(QString appKey)
+void AppConfig::setUserAppKey(const QString& appKey)
 {
      AppConfig::setConfig("key", appKey);
 }
@@ -64,7 +64,7 @@ void AppConfig::loadConfig()
     AppConfig::setting = new QSettings();
 }
 
-QVariant AppConfig::getConfig(QString key, QVariant defaultValue)
+QVariant AppConfig::getConfig(const QString& key, const QVariant& defaultValue)
 {
     if (nullptr == AppConfig::setting) {
         AppConfig::loadConfig();
@@ -72,7 +72,7 @@ QVariant AppConfig::getConfig(QString key, QVariant defaultValue)
     return AppConfig::setting->value(key, defaultValue);
 }
 
-void AppConfig::setConfig(QString key, QVariant value)
+void AppConfig::setConfig(const QString& key, const QVariant& value)
 {
     if (nullptr == AppConfig::setting) {
         AppConfig::loadConfig();

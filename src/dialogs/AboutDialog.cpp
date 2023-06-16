@@ -48,7 +48,7 @@ void AboutDialog::initCenterWidget()
 {
     centerWidget = new QWidget();
 
-    QLabel *iconLabel = new QLabel();
+    auto *iconLabel = new QLabel();
     iconLabel->setFixedSize(96, 96);
     QPixmap icon(":/app_icon/app_icon/app_logo.svg");
     iconLabel->setPixmap(icon.scaled(iconLabel->size()));
@@ -56,19 +56,19 @@ void AboutDialog::initCenterWidget()
     QFont font = QApplication::font();
     font.setPointSize(14);
 
-    QLabel *verLabel = new QLabel();
+    auto *verLabel = new QLabel();
     verLabel->setFont(font);
     verLabel->setText("版    本: " + AppConfig::getAppVersion());
 
-    QLabel *fallbackLabel = new QLabel();
+    auto *fallbackLabel = new QLabel();
     fallbackLabel->setFont(font);
     fallbackLabel->setText("作    者: blueshaw@163.com");
 
-    QLabel *apiLabel = new QLabel();
+    auto *apiLabel = new QLabel();
     apiLabel->setFont(font);
     apiLabel->setText(QString::fromLocal8Bit("数据来源: 和风天气"));
 
-    QVBoxLayout *vLayout = new QVBoxLayout();
+    auto *vLayout = new QVBoxLayout();
     vLayout->setContentsMargins(0, 0, 0, 0);
     vLayout->setSpacing(10);
     vLayout->addStretch();
@@ -77,7 +77,7 @@ void AboutDialog::initCenterWidget()
     vLayout->addWidget(apiLabel);
     vLayout->addStretch();
 
-    QHBoxLayout *hLayout = new QHBoxLayout();
+    auto *hLayout = new QHBoxLayout();
     hLayout->setSpacing(0);
     hLayout->setContentsMargins(10, 10, 10, 10);
     hLayout->addWidget(iconLabel);

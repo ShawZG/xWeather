@@ -65,7 +65,7 @@ void CityManagerDialog::initCenterWidget()
     searchWidget = new SearchComBoxWidget();
     searchWidget->setMinimumWidth(400);
 
-    QFrame  *hSeparatorLine1 = new QFrame();
+    QFrame *hSeparatorLine1 = new QFrame();
     hSeparatorLine1->setFrameStyle(QFrame::HLine);
 
     QLabel *topCityLabel = new QLabel(QString::fromLocal8Bit("热门城市:"));
@@ -78,7 +78,7 @@ void CityManagerDialog::initCenterWidget()
     hTopLayout->addLayout(topCityLayout);
     hTopLayout->addStretch(1);
 
-    if (true != topCityList.isEmpty()) {
+    if (!topCityList.isEmpty()) {
         updateTopCityWidget();
     } else {
         getTopCityList();
@@ -278,16 +278,16 @@ void CityManagerDialog::slotTopCityClicked()
 
 void CityManagerDialog::slotEditFavCity(bool checked)
 {
-    QList<FavCityWidget*> favCityList = findChildren<FavCityWidget*>();
-    for( auto favCity : favCityList) {
+    QList<FavCityWidget*> favCities = findChildren<FavCityWidget*>();
+    for( auto favCity : favCities) {
         favCity->setEditable(checked);
     }
 }
 
 void CityManagerDialog::slotAddFavCity(const QString &cityName, const QString &cityId)
 {
-    if (false == isFavCityExits(cityName, cityId)){
-        FavCityWidget *favCity = new FavCityWidget(cityName, cityId);
+    if (!isFavCityExits(cityName, cityId)){
+        auto *favCity = new FavCityWidget(cityName, cityId);
         favCityList << favCity;
         updateFavCityWidget();
     }

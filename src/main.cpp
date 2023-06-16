@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
 
     SingleApplication app(argc, argv,  true, SingleApplication::User, 100);
     app.setAttribute(Qt::AA_UseHighDpiPixmaps);
+    app.setAttribute(Qt::AA_EnableHighDpiScaling);
     app.setStyle(new DarkStyle);
     app.setApplicationName("xweather");
     app.setApplicationVersion(AppConfig::getAppVersion());
@@ -24,7 +25,7 @@ int main(int argc, char *argv[])
 
     MainDialog w;
     QObject::connect(&app, &SingleApplication::instanceStarted, &w, &MainDialog::raise);
-    if (true == app.isPrimary()) {
+    if (app.isPrimary()) {
         w.show();
     } else {
         emit app.instanceStarted();

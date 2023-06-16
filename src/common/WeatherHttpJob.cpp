@@ -276,7 +276,7 @@ void WeatherHttpJob::slotParseTodayLife()
         }
     }
     auto weatherWidget = qobject_cast<WeatherWidget *>(parent());
-    weatherWidget->updateTodayLifyIndex(list);
+    weatherWidget->updateTodayLifeIndex(list);
 }
 
 void WeatherHttpJob::getFutureCityLife()

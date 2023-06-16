@@ -4,10 +4,10 @@ DarkStyle::DarkStyle() : DarkStyle(styleBase()) {}
 
 DarkStyle::DarkStyle(QStyle *style) : QProxyStyle(style) {}
 
-QStyle *DarkStyle::styleBase(QStyle *style) const {
-  static QStyle *base =
-      !style ? QStyleFactory::create(QStringLiteral("Fusion")) : style;
-  return base;
+QStyle *DarkStyle::styleBase(QStyle *style) const
+{
+    static QStyle *base = !style ? QStyleFactory::create(QStringLiteral("Fusion")) : style;
+    return base;
 }
 
 QStyle *DarkStyle::baseStyle() const { return styleBase(); }
@@ -36,22 +36,25 @@ void DarkStyle::polish(QPalette &palette) {
   palette.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor(127, 127, 127));
 }
 
-void DarkStyle::polish(QApplication *app) {
-  if (!app) return;
+void DarkStyle::polish(QApplication *app)
+{
+    if (!app) {
+        return;
+    }
 
-  // increase font size for better reading,
-  // setPointSize was reduced from +2 because when applied this way in Qt5, the
-  // font is larger than intended for some reason
-  QFont defaultFont = QApplication::font();
-  defaultFont.setPointSize(defaultFont.pointSize() + 1);
-  app->setFont(defaultFont);
+    // increase font size for better reading,
+    // setPointSize was reduced from +2 because when applied this way in Qt5, the
+    // font is larger than intended for some reason
+    QFont defaultFont = QApplication::font();
+    defaultFont.setPointSize(defaultFont.pointSize() + 1);
+    app->setFont(defaultFont);
 
-  // loadstylesheet
-  QFile qfDarkstyle(QStringLiteral(":/darkstyle/darkstyle.qss"));
-  if (qfDarkstyle.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    // set stylesheet
-    QString qsStylesheet = QString::fromLatin1(qfDarkstyle.readAll());
-    app->setStyleSheet(qsStylesheet);
-    qfDarkstyle.close();
-  }
+    // loadstylesheet
+    QFile qfDarkstyle(QStringLiteral(":/darkstyle/darkstyle.qss"));
+    if (qfDarkstyle.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        // set stylesheet
+        QString qsStylesheet = QString::fromLatin1(qfDarkstyle.readAll());
+        app->setStyleSheet(qsStylesheet);
+        qfDarkstyle.close();
+    }
 }

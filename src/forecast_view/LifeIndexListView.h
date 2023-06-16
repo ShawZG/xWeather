@@ -11,7 +11,7 @@ class LifeIndexListView : public QListView
     Q_OBJECT
 public:
     explicit LifeIndexListView(QWidget *parent = nullptr);
-    void setTodayLifeIndexData(QList<CityLifeIndex> list);
+    void setTodayLifeIndexData(const QList<CityLifeIndex>& list);
 
 private:
     void initUI();

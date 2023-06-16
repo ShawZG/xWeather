@@ -16,7 +16,7 @@ FutureWeatherItemDelegate::FutureWeatherItemDelegate(QWidget *parent) : parentWi
 
 void FutureWeatherItemDelegate::paintItemBackground(QPainter *painter, const QStyleOptionViewItem &option) const
 {
-    if (true == option.state.testFlag(QStyle::State_MouseOver)) {
+    if (option.state.testFlag(QStyle::State_MouseOver)) {
         QRect rect(option.rect.topLeft() + QPoint(0, 5), option.rect.bottomRight() - QPoint(0, 5));
         painter->save();
         painter->setPen(Qt::transparent);

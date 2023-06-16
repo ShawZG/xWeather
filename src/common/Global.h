@@ -6,42 +6,42 @@
 
 /* 城市当天天气信息 */
 typedef struct tagCityTodayWeather {
-    QString cityName;       //城市名称
-    QString cityId;         //城市编码
-    QString date;           //当前日期
-    QString updateTime;     //天气更新时间
-    QString week;           //星期
-    QString temperature;    //温度
-    QString temperatureLow; //最低温度
-    QString temperatureHigh; //最高温度
-    QString weatherDesc;    //实况天气状况中文
-    QString weatherId;      //实况天气ID
-    QString humidity;       //湿度
-    QString windDirection;  //风向
-    QString windScale;      //风力
-    QString aqi;            //空气质量
-    QString aqiLevel;       //空气质量等级
-    QString primary;        //主要污染物
-    QString pm10;           //PM10
-    QString pm2p5;          //PM2.5
-    QString no2;            //二氧化氮
-    QString so2;            //二氧化硫
-    QString co;             //一氧化碳
-    QString o3;             //臭氧
-    QString alarmType;      //预警种类
-    QString alarmLevel;     //预警等级
-    QString alarmContent;   //预警内容
+    QString cityName;           //城市名称
+    QString cityId;             //城市编码
+    QString date;               //当前日期
+    QString updateTime;         //天气更新时间
+    QString week;               //星期
+    QString temperature;        //温度
+    QString temperatureLow;     //最低温度
+    QString temperatureHigh;     //最高温度
+    QString weatherDesc;        //实况天气状况中文
+    QString weatherId;          //实况天气ID
+    QString humidity;           //湿度
+    QString windDirection;      //风向
+    QString windScale;          //风力
+    QString aqi;                //空气质量
+    QString aqiLevel;           //空气质量等级
+    QString primary;            //主要污染物
+    QString pm10;               //PM10
+    QString pm2p5;              //PM2.5
+    QString no2;                //二氧化氮
+    QString so2;                //二氧化硫
+    QString co;                 //一氧化碳
+    QString o3;                 //臭氧
+    QString alarmType;          //预警种类
+    QString alarmLevel;         //预警等级
+    QString alarmContent;       //预警内容
 } CityTodayWeather;
 
 typedef struct tagCityFutureWeather {
-    QString date;           //当前日期
-    QString day;            //星期
-    QString week;           //星期
-    QString temperatureLow; //最低温度
-    QString temperatureHigh; //最高温度
-    QString weatherDesc;    //实况天气状况中文
-    QString weatherId;      //实况天气ID
-    QString windSpeed;      //风力
+    QString date;               //当前日期
+    QString day;                //星期
+    QString week;               //星期
+    QString temperatureLow;     //最低温度
+    QString temperatureHigh;    //最高温度
+    QString weatherDesc;        //实况天气状况中文
+    QString weatherId;          //实况天气ID
+    QString windSpeed;          //风力
 } CityFutureWeather;
 Q_DECLARE_METATYPE(CityFutureWeather)
 

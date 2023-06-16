@@ -22,7 +22,7 @@ void SearchComBoxWidget::initUI()
     comboBox->setEditable(true);
     comboBox->lineEdit()->setPlaceholderText(QString::fromLocal8Bit("请输入城市名称,支持中文或拼音,不包含空格"));
 
-    QVBoxLayout *vLayout = new QVBoxLayout();
+    auto *vLayout = new QVBoxLayout();
     vLayout->addWidget(comboBox);
     setLayout(vLayout);
 }
@@ -41,10 +41,10 @@ void SearchComBoxWidget::initConnect()
     connect(comboBox, QOverload<int>::of(&QComboBox::activated), this, &SearchComBoxWidget::slotAddCity);
 }
 
-void SearchComBoxWidget::slotSearchCity(QString name)
+void SearchComBoxWidget::slotSearchCity(const QString& name)
 {
     currentText =  comboBox->currentText();
-    if ( false == name.isEmpty() && false == name.contains(" ", Qt::CaseInsensitive)) {
+    if (!name.isEmpty() && !name.contains(" ", Qt::CaseInsensitive)) {
         QSignalBlocker blocker(comboBox->lineEdit());
         comboBox->clear();
         /* clear之后lineedit的内容会被清除，再次设置，避免lineedit内容闪烁。 */
@@ -58,11 +58,11 @@ void SearchComBoxWidget::slotParseSearchCity()
 {       
     QSignalBlocker blocker(comboBox->lineEdit());
 
-    QNetworkReply *reply =  qobject_cast<QNetworkReply *>(QObject::sender());
+    auto *reply =  qobject_cast<QNetworkReply *>(QObject::sender());
     reply->deleteLater();
 
     QJsonDocument doc;
-    if ( false == HttpClient::validateReplay(reply, doc)) {
+    if (!HttpClient::validateReplay(reply, doc)) {
         return;
     }
 
@@ -92,7 +92,7 @@ void SearchComBoxWidget::slotParseSearchCity()
 void SearchComBoxWidget::slotAddCity(int index)
 {
     QVariantMap map = comboBox->itemData(index).toMap();
-    if ( false == map["name"].toString().isEmpty() && false == map["id"].toString().isEmpty()) {
+    if (!map["name"].toString().isEmpty() && !map["id"].toString().isEmpty()) {
         emit SignalManager::instance()->sigAddCity(map["name"].toString(), map["id"].toString());
     }
 }

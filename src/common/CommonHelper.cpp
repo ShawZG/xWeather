@@ -13,12 +13,12 @@ CommonHelper::CommonHelper(QObject *parent) : QObject(parent)
 {
 }
 
-bool CommonHelper::setApplicationFont(QString fontPath)
+bool CommonHelper::setApplicationFont(const QString& fontPath)
 {
     bool result = false;
     int fontId = QFontDatabase::addApplicationFont(fontPath);
     QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
-    if (false == fontFamily.isEmpty()) {
+    if (!fontFamily.isEmpty()) {
         QApplication::setFont(QFont(fontFamily));
         result = true;
     }
@@ -28,7 +28,7 @@ bool CommonHelper::setApplicationFont(QString fontPath)
 void CommonHelper::setStyle(const QString &stylePath)
 {
     QFile qss(stylePath);
-    if (true == qss.open(QFile::ReadOnly)) {
+    if (qss.open(QFile::ReadOnly)) {
         qApp->setStyleSheet(qss.readAll());
         qss.close();
     }
@@ -50,7 +50,7 @@ QString CommonHelper::getLocalTimestamp()
 * 将第5步得到的字符串进行MD5加密 ( 注 ：字符集为 UTF-8 )，得到签名结果
 * 将第6步得到的签名结果 作为参数添加至请求中，参数名为 sign, 即 sign=xxxxxxx
 */
-QString CommonHelper::getSign(QMap<QString, QString> map, QString key)
+QString CommonHelper::getSign(QMap<QString, QString> map, const QString& key)
 {
     QStringList mapStrList;
     QMap<QString, QString>::iterator i = map.begin();
@@ -77,7 +77,7 @@ void CommonHelper::ConvertImageColor(QImage &image, const QRgb &rgb)
     }
 }
 
-void CommonHelper::initPainter(QPainter &painter, QColor penColor, int fontSize)
+void CommonHelper::initPainter(QPainter &painter, const QColor& penColor, int fontSize)
 {
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setPen(penColor);
@@ -111,14 +111,14 @@ QColor CommonHelper::getAirQualityIndexColor(int aqi)
     }
 }
 
-QRect CommonHelper::textPaintRect(QFont font, QPoint leftTopPoint, QString text)
+QRect CommonHelper::textPaintRect(const QFont& font, QPoint leftTopPoint, const QString& text)
 {
     QFontMetrics fontMetrics(font);
     QRect textRect = fontMetrics.boundingRect(QRect(), Qt::AlignLeft, text);
     return QRect(leftTopPoint, textRect.size());
 }
 
-QString CommonHelper::calLastUpdateTime(QDateTime lastUpdate)
+QString CommonHelper::calLastUpdateTime(const QDateTime& lastUpdate)
 {
     qint64 secs = lastUpdate.secsTo(QDateTime::currentDateTime());
     return QString::number(secs / 60);
@@ -127,7 +127,7 @@ QString CommonHelper::calLastUpdateTime(QDateTime lastUpdate)
 QRect CommonHelper::adjustTextRect(const QRect &textRect, const QRect &optionRect)
 {
     QRect newRect = textRect;
-    if (true == optionRect.contains(textRect.bottomRight())) {
+    if (optionRect.contains(textRect.bottomRight())) {
         QPoint bottomRight(optionRect.bottomRight().x(), textRect.bottomRight().y());
         newRect = QRect(textRect.topLeft(), bottomRight);
     }

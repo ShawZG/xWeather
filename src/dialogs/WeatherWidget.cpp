@@ -15,7 +15,7 @@
 
 #include "WeatherWidget.h"
 
-WeatherWidget::WeatherWidget(QString cityId, QString cityName, QWidget *parent)
+WeatherWidget::WeatherWidget(const QString &cityId, const QString &cityName, QWidget *parent)
     : QWidget(parent), cityId(cityId), cityName(cityName)
 {
     initUI();
@@ -65,7 +65,7 @@ void WeatherWidget::updateTodayCityWeather(CityTodayWeather data)
     todayCityFrame->setTodayCityWeatherData(data);
 }
 
-void WeatherWidget::updateTodayLifyIndex(QList<CityLifeIndex> list)
+void WeatherWidget::updateTodayLifeIndex(QList<CityLifeIndex> list)
 {
     lifeIndexListView->setTodayLifeIndexData(list);
 }

@@ -33,11 +33,11 @@ void FutureCityWeatherListView::initUI()
     setMouseTracking(true);
 }
 
-void FutureCityWeatherListView::seFutureCityWeatherData(QList<CityFutureWeather> list)
+void FutureCityWeatherListView::seFutureCityWeatherData(const QList<CityFutureWeather>& list)
 {
     itemModel->clear();
-    for (auto lifeIndex : list) {
-        QStandardItem *item = new QStandardItem();
+    for (const auto& lifeIndex : list) {
+        auto *item = new QStandardItem();
         item->setData(QVariant::fromValue(lifeIndex), Qt::DisplayRole);
         itemModel->appendRow(item);
     }

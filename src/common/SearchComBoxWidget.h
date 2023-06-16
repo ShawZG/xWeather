@@ -13,7 +13,7 @@ public:
     explicit SearchComBoxWidget(QWidget *parent = nullptr);
 
 private slots:
-    void slotSearchCity(QString name);
+    void slotSearchCity(const QString& name);
     void slotParseSearchCity();
     void slotAddCity(int index);
 

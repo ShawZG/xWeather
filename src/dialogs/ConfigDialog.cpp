@@ -65,21 +65,21 @@ void ConfigDialog::initCenterWidget()
         leftListNavigation->setCurrentItem(leftListNavigation->item(0));
     }
 
-    QVBoxLayout *vRightLayout = new QVBoxLayout();
+    auto *vRightLayout = new QVBoxLayout();
     vRightLayout->setContentsMargins(5, 5, 5, 5);
     vRightLayout->setSpacing(5);
 //    vRightLayout->addWidget(baseConfigWidget);
     vRightLayout->addWidget(apiConfigWidget);
     vRightLayout->addStretch();
 
-    QWidget *rightWidget = new QWidget();
+    auto *rightWidget = new QWidget();
     rightWidget->setLayout(vRightLayout);
 
-    QScrollArea *rightScrollConfig = new QScrollArea();
+    auto *rightScrollConfig = new QScrollArea();
     rightScrollConfig->setFrameShape(QFrame::NoFrame);
     rightScrollConfig->setWidget(rightWidget);
 
-    QHBoxLayout *hLayout = new QHBoxLayout();
+    auto *hLayout = new QHBoxLayout();
     hLayout->setContentsMargins(0, 0, 5, 0);
     hLayout->setSpacing(0);
     hLayout->addWidget(leftListNavigation);
@@ -92,22 +92,22 @@ void ConfigDialog::initCenterWidget()
 
 void ConfigDialog::initBaseConfigWidget()
 {
-    QListWidgetItem *baseItem = new QListWidgetItem(QString::fromLocal8Bit("基本设置"));
+    auto *baseItem = new QListWidgetItem(QString::fromLocal8Bit("基本设置"));
     baseItem->setSizeHint(QSize(120, 40));
     leftListNavigation->addItem(baseItem);
 
     baseConfigWidget = new QWidget();
     baseConfigWidget->setObjectName("baseConfigWidget");
-    QLabel *baseLabel = new QLabel(QString::fromLocal8Bit("基本设置"));
-    QCheckBox *pushExtremeWeather = new QCheckBox(QString::fromLocal8Bit("推送极端天气通知"));
-    QCheckBox *autoRefreshWeather = new QCheckBox(QString::fromLocal8Bit("后台自动刷新天气"));
-    QComboBox *timeComboBox = new QComboBox();
+    auto *baseLabel = new QLabel(QString::fromLocal8Bit("基本设置"));
+    auto *pushExtremeWeather = new QCheckBox(QString::fromLocal8Bit("推送极端天气通知"));
+    auto *autoRefreshWeather = new QCheckBox(QString::fromLocal8Bit("后台自动刷新天气"));
+    auto *timeComboBox = new QComboBox();
     timeComboBox->addItem(QString::fromLocal8Bit("5分钟"), QVariant(5));
     timeComboBox->addItem(QString::fromLocal8Bit("10分钟"), QVariant(10));
     timeComboBox->addItem(QString::fromLocal8Bit("15分钟"), QVariant(15));
     timeComboBox->addItem(QString::fromLocal8Bit("30分钟"), QVariant(30));
     timeComboBox->addItem(QString::fromLocal8Bit("60分钟"), QVariant(60));
-    QVBoxLayout *vBaseLayout = new QVBoxLayout();
+    auto *vBaseLayout = new QVBoxLayout();
     vBaseLayout->setContentsMargins(5, 20, 5, 20);
     vBaseLayout->setSpacing(10);
     vBaseLayout->addWidget(baseLabel);
@@ -119,14 +119,14 @@ void ConfigDialog::initBaseConfigWidget()
 
 void ConfigDialog::initApiConfigWidget()
 {
-    QListWidgetItem *apiItem = new QListWidgetItem(QString::fromLocal8Bit("天气接口"));
+    auto *apiItem = new QListWidgetItem(QString::fromLocal8Bit("天气接口"));
     apiItem->setSizeHint(QSize(120, 40));
     leftListNavigation->addItem(apiItem);
 
     apiConfigWidget = new QWidget();
     apiConfigWidget->setObjectName("apiConfigWidget");
-    QLabel *apiLabel = new QLabel(QString::fromLocal8Bit("天气接口"));
-    QLabel *apiComment = new QLabel();
+    auto *apiLabel = new QLabel(QString::fromLocal8Bit("天气接口"));
+    auto *apiComment = new QLabel();
     apiComment->setText("免费版本的天气数据接口对每天的访问量和访问频率都做了限制。"
                         "为了您更好的使用本软件，建议您去和风天气官网(https://dev.heweather.com)注册成为个人开发者，"
                         "使用自己的认证信息请求天气数据。您的个人信息不会被收集，请放心使用。");
@@ -147,7 +147,7 @@ void ConfigDialog::initApiConfigWidget()
     apiKeyEdit->setFixedHeight(96);
     apiKeyEdit->setText(AppConfig::getUserAppKey());
 
-    QVBoxLayout *vApiLayout = new QVBoxLayout();
+    auto *vApiLayout = new QVBoxLayout();
     vApiLayout->setContentsMargins(5, 20, 5, 20);
     vApiLayout->setSpacing(10);
     vApiLayout->addWidget(apiLabel);

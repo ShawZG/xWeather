@@ -16,14 +16,14 @@ public:
     static QString  getAppId();
     static QString  getAppKey();
     static QString  getUserAppId();
-    static void     setUserAppId(QString appId);
+    static void     setUserAppId(const QString& appId);
     static QString  getUserAppKey();
-    static void     setUserAppKey(QString appKey);
+    static void     setUserAppKey(const QString& appKey);
 
 private:
     static void        loadConfig();
-    static QVariant    getConfig(QString key, QVariant defaultValue);
-    static void        setConfig(QString key, QVariant value);
+    static QVariant    getConfig(const QString& key, const QVariant& defaultValue);
+    static void        setConfig(const QString& key, const QVariant& value);
 
     static QSettings    *setting;
     static QString      appVer;

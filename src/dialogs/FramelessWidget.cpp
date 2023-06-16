@@ -141,7 +141,7 @@ bool FramelessWidget::eventFilter(QObject *watched, QEvent *event)
             updatePaddingRect();
         } else if (event->type() == QEvent::HoverMove) {
             //设置对应鼠标形状,这个必须放在这里而不是下面,因为可以在鼠标没有按下的时候识别
-            QHoverEvent *hoverEvent = dynamic_cast<QHoverEvent *>(event);
+            auto *hoverEvent = dynamic_cast<QHoverEvent *>(event);
             QPoint point = hoverEvent->pos();
             if (resizeEnable) {
                 setMouseCursor(point);
@@ -150,22 +150,22 @@ bool FramelessWidget::eventFilter(QObject *watched, QEvent *event)
             int offsetX = point.x() - lastPos.x();
             int offsetY = point.y() - lastPos.y();
             //根据按下处的位置判断是否是移动控件还是拉伸控件
-            if (true == moveEnable && true == pressed) {
+            if (moveEnable && pressed) {
 #ifdef Q_OS_LINUX
                 // 部分X11平台窗管不支持无边框窗口移出屏幕外
-                if (true == QX11Info::isPlatformX11()) {
+                if (QX11Info::isPlatformX11()) {
                     QPoint gPoint = widget->mapToGlobal(hoverEvent->pos());
                     x11mouseMoveEvent(gPoint.x(), gPoint.y());
                 }
 #endif
                 widget->move(widget->x() + offsetX, widget->y() + offsetY);
             }
-            if (true == resizeEnable) {
+            if (resizeEnable) {
                 updateGeometry(offsetX, offsetY);
             }
         } else if (event->type() == QEvent::MouseButtonPress) {
             //记住当前控件坐标和宽高以及鼠标按下的坐标
-            QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent *>(event);
+            auto *mouseEvent = dynamic_cast<QMouseEvent *>(event);
             rectX = widget->x();
             rectY = widget->y();
             rectW = widget->width();

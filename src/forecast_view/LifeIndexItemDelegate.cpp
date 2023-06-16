@@ -76,7 +76,7 @@ void LifeIndexItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
 //    painter->drawRect(option.rect);
 //    painter->restore();
 #endif
-        if (true == option.state.testFlag(QStyle::State_MouseOver)) {
+        if (option.state.testFlag(QStyle::State_MouseOver)) {
             paintLifeIndexDesc(painter, option, index);
         } else {
             paintLifeIndexTitle(painter, option, index);

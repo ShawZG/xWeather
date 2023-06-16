@@ -13,10 +13,10 @@ class WeatherWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit WeatherWidget(QString cityId, QString cityName, QWidget *parent = nullptr);
+    explicit WeatherWidget(const QString &cityId, const QString &cityName, QWidget *parent = nullptr);
 
     void updateTodayCityWeather(CityTodayWeather data);
-    void updateTodayLifyIndex(QList<CityLifeIndex> list);
+    void updateTodayLifeIndex(QList<CityLifeIndex> list);
     void updateFutureCityWeather(QList<CityFutureWeather> list);
     void updateWarningCityWeather(QList<CityWarningWeather> list);
 

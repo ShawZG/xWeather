@@ -11,7 +11,7 @@ class FutureCityWeatherListView: public QListView
     Q_OBJECT
 public:
     explicit FutureCityWeatherListView(QWidget *parent = nullptr);
-    void seFutureCityWeatherData(QList<CityFutureWeather> list);
+    void seFutureCityWeatherData(const QList<CityFutureWeather>& list);
 
 private:
     void initUI();

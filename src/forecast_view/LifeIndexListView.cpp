@@ -32,7 +32,7 @@ void LifeIndexListView::initUI()
     setMouseTracking(true);
 }
 
-void LifeIndexListView::setTodayLifeIndexData(QList<CityLifeIndex> list)
+void LifeIndexListView::setTodayLifeIndexData(const QList<CityLifeIndex>& list)
 {
 //    int rowCount = itemModel->rowCount();
 //    if (rowCount > 0) {
@@ -40,8 +40,8 @@ void LifeIndexListView::setTodayLifeIndexData(QList<CityLifeIndex> list)
 //    }
     itemModel->clear();
 
-    for (auto lifeIndex : list) {
-        QStandardItem *item = new QStandardItem();
+    for (const auto& lifeIndex : list) {
+        auto *item = new QStandardItem();
         item->setData(QVariant::fromValue(lifeIndex), Qt::DisplayRole);
         itemModel->appendRow(item);
     }

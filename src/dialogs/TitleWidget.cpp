@@ -49,33 +49,33 @@ void TitleWidget::initUI()
     titleCloseButton = new QPushButton();
     titleCloseButton->setObjectName("titleCloseButton");
 
-    QHBoxLayout *hLayout = new QHBoxLayout();
+    auto *hLayout = new QHBoxLayout();
     hLayout->setContentsMargins(0, 0, 0, 0);
     hLayout->setSpacing(0);
 
     hLayout->addSpacing(4);
-    if (true != titleIconPath.isEmpty()) {
+    if (!titleIconPath.isEmpty()) {
         titleIconLabel->setPixmap(QPixmap(titleIconPath).scaled(titleIconLabel->rect().size()));
         titleIconLabel->show();
         hLayout->addWidget(titleIconLabel);
 
     }
-    if (true != titleStr.isEmpty()) {
+    if (!titleStr.isEmpty()) {
         hLayout->addSpacing(20);
         titleStrLabel->setText(titleStr);
         titleStrLabel->show();
         hLayout->addWidget(titleStrLabel);
     }
     hLayout->addStretch();
-    if (true == showMenuButton) {
+    if (showMenuButton) {
         hLayout->addWidget(titleMenuButton);
         titleMenuButton->show();
     }
-    if (true == showMiniButton) {
+    if (showMiniButton) {
         hLayout->addWidget(titleMiniButton);
         titleMiniButton->show();
     }
-    if (true == showMaxButton) {
+    if (showMaxButton) {
         hLayout->addWidget(titleRestoreButton);
         hLayout->addWidget(titleMaxButton);
         titleMaxButton->show();

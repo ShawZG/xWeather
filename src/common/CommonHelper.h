@@ -11,14 +11,14 @@ class CommonHelper : public QObject
 public:
     explicit CommonHelper(QObject *parent = nullptr);
 
-    static bool setApplicationFont(QString fontPath);
+    static bool setApplicationFont(const QString& fontPath);
     static QString getLocalTimestamp();
-    static QString getSign(QMap<QString, QString> map, QString key);
+    static QString getSign(QMap<QString, QString> map, const QString& key);
     static void setStyle(const QString &stylePath);
     static void ConvertImageColor(QImage &image, const QRgb &rgb);
-    static QRect textPaintRect(QFont font, QPoint leftTopPoint, QString text);
-    static QString calLastUpdateTime(QDateTime lastUpdate);
-    static void initPainter(QPainter &painter, QColor penColor, int fontSize);
+    static QRect textPaintRect(const QFont& font, QPoint leftTopPoint, const QString& text);
+    static QString calLastUpdateTime(const QDateTime& lastUpdate);
+    static void initPainter(QPainter &painter, const QColor& penColor, int fontSize);
     static QColor getAirQualityIndexColor(int aqi);
     static QRect adjustTextRect(const QRect &textRect, const QRect &optionRect);
     static QColor getWarningLevelColor(const QString &warningLevel);
